@@ -105,8 +105,14 @@
             background: #e91e63;
         }
 
-        .tab-btn.celebration.active {
-            background: #ff9800;
+        .tab-btn.promotion.active {
+
+            background: #2196f3;
+
+        }
+
+
+        .tab-btn.opening.active {
         }
 
         /* 탭 콘텐츠 */
@@ -171,9 +177,17 @@
             color: #e91e63;
         }
 
-        .celebration .message-number {
-            background: #fff3e0;
-            color: #ff9800;
+        .promotion .message-number {
+
+            background: #e3f2fd;
+
+            color: #2196f3;
+
+        }
+
+ 
+
+        .opening .message-number {
         }
 
         .message-text {
@@ -360,7 +374,8 @@
         <div class="tabs">
             <button class="tab-btn funeral active" onclick="showTab('funeral')">장례</button>
             <button class="tab-btn wedding" onclick="showTab('wedding')">결혼</button>
-            <button class="tab-btn celebration" onclick="showTab('celebration')">축하</button>
+            <button class="tab-btn promotion" onclick="showTab('promotion')">승진/취임</button>
+            <button class="tab-btn opening" onclick="showTab('opening')">개업/이전</button>
         </div>
 
         <!-- 장례 탭 콘텐츠 -->
@@ -460,12 +475,11 @@
                 </div>
             </div>
         </div>
+        <!-- 승진/취임 탭 콘텐츠 -->
 
-        <!-- 축하 탭 콘텐츠 -->
-        <div id="celebration" class="tab-content celebration">
-            <!-- 승진/취임 섹션 -->
+        <div id="promotion" class="tab-content promotion">
 
-            <p class="category-label">승진 / 취임</p>
+            <p class="category-label">승진 / 취임 문구</p>
 
             <div class="message-list">
 
@@ -527,56 +541,21 @@
 
             </div>
 
+        </div>
+
  
 
-            <!-- 개업/이전 섹션 -->
+        <!-- 개업/이전 탭 콘텐츠 -->
 
-            <p class="category-label" style="margin-top: 24px;">개업 / 이전</p>
+        <div id="opening" class="tab-content opening">
 
-            <div class="message-list">
-
-                <div class="message-card">
-
-                    <span class="message-number">1</span>
-
-                    <p class="message-text">祝開業 (축 개업)</p>
-
-                    <button class="copy-btn" onclick="copyText(this, '祝開業')">
-
-                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-
-                    </button>
-
-                </div>
-
-                <div class="message-card">
-
-                    <span class="message-number">2</span>
-
-                    <p class="message-text">무궁한 발전을 기원합니다</p>
-
-                    <button class="copy-btn" onclick="copyText(this, '무궁한 발전을 기원합니다')">
-
-                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-
-                    </button>
-
-                </div>
-
-                <div class="message-card">
-
-                    <span class="message-number">3</span>
-
-                    <p class="message-text">이전을 축하드리며 사업 번창하시기 바랍니다</p>
-
-                    <button class="copy-btn" onclick="copyText(this, '이전을 축하드리며 사업 번창하시기 바랍니다')">
+            <p class="category-label">개업 / 이전 문구</p>
 
                 </div>
 
             </div>
 
         </div>
-
         <!-- 푸터 -->
         <div class="footer">
             <p class="copyright">© 2025 (주)베스트플라워. All Rights Reserved.</p>
