@@ -28,6 +28,12 @@
             margin-bottom: 20px;
         }
 
+        .header .logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+
         .header h1 {
             font-size: 24px;
             color: #333;
@@ -37,6 +43,26 @@
         .header p {
             font-size: 14px;
             color: #666;
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer .copyright {
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 6px;
         }
 
         /* 탭 스타일 */
@@ -313,6 +339,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <img src="https://www.bestflower.co.kr/data/skin/front/bestflower/img/logo/logo.png" alt="베스트플라워" class="logo">
             <h1>화환 문구 모음</h1>
             <p>원하시는 문구를 선택해 복사하세요</p>
         </div>
@@ -320,7 +347,7 @@
         <!-- 보내는 분 문구 섹션 -->
         <div class="sender-section">
             <label class="sender-label">자주 쓰는 보내는 분 문구</label>
-            <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사" oninput="saveSender()">
+            <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender()">
         </div>
 
         <!-- 탭 버튼 -->
@@ -336,57 +363,57 @@
             <div class="message-list">
                 <div class="message-card">
                     <span class="message-number">1</span>
-                    <p class="message-text">삼가 고인의 명복을 빕니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '삼가 고인의 명복을 빕니다.')">
+                    <p class="message-text">故人의 冥福을 빕니다 (삼가 고인의 명복을 빕니다)</p>
+                    <button class="copy-btn" onclick="copyText(this, '故人의 冥福을 빕니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">2</span>
-                    <p class="message-text">고인의 명복을 빌며 유족에게 깊은 위로를 전합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '고인의 명복을 빌며 유족에게 깊은 위로를 전합니다.')">
+                    <p class="message-text">삼가 고인의 명복을 빕니다 (한글)</p>
+                    <button class="copy-btn" onclick="copyText(this, '삼가 고인의 명복을 빕니다 (한글)')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">3</span>
-                    <p class="message-text">삼가 조의를 표합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '삼가 조의를 표합니다.')">
+                    <p class="message-text">謹弔 (근조)</p>
+                    <button class="copy-btn" onclick="copyText(this, '謹弔')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">4</span>
-                    <p class="message-text">슬픔을 함께 나누며 삼가 조의를 표합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '슬픔을 함께 나누며 삼가 조의를 표합니다.')">
+                   <p class="message-text">삼가 弔意를 표합니다 (삼가 조의를 표합니다)</p>
+                    <button class="copy-btn" onclick="copyText(this, '삼가 조의를 표합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">5</span>
-                    <p class="message-text">故人의 冥福을 빕니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '故人의 冥福을 빕니다.')">
+                    <p class="message-text">追慕 (추모)</p>
+                    <button class="copy-btn" onclick="copyText(this, '追慕')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">6</span>
-                    <p class="message-text">삼가 弔意를 표합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '삼가 弔意를 표합니다.')">
+                     <p class="message-text">하나님의 위로가 함께하시길 기도합니다</p>
+                    <button class="copy-btn" onclick="copyText(this, '하나님의 위로가 함께하시길 기도합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">7</span>
-                    <p class="message-text">깊은 슬픔 속에 삼가 명복을 빕니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '깊은 슬픔 속에 삼가 명복을 빕니다.')">
+                     <p class="message-text">召天 (소천)</p>
+                    <button class="copy-btn" onclick="copyText(this, '召天')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">8</span>
-                    <p class="message-text">고인의 영면을 빕니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '고인의 영면을 빕니다.')">
+                    <p class="message-text">極樂往生發願 (극락왕생발원)</p>
+                    <button class="copy-btn" onclick="copyText(this, '極樂往生發願')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
@@ -399,29 +426,29 @@
             <div class="message-list">
                 <div class="message-card">
                     <span class="message-number">1</span>
-                    <p class="message-text">결혼을 진심으로 축하합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '결혼을 진심으로 축하합니다.')">
+                    <p class="message-text">祝結婚 (축결혼/신랑측)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝結婚')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">2</span>
-                    <p class="message-text">두 분의 앞날에 행복만 가득하길 바랍니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '두 분의 앞날에 행복만 가득하길 바랍니다.')">
+                    <p class="message-text">祝華婚 (축화혼/신부측)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝華婚')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">3</span>
-                    <p class="message-text">사랑과 행복이 넘치는 가정을 이루시길 바랍니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '사랑과 행복이 넘치는 가정을 이루시길 바랍니다.')">
+                    <p class="message-text">결혼을 축하드립니다</p>
+                    <button class="copy-btn" onclick="copyText(this, '결혼을 축하드립니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">4</span>
-                    <p class="message-text">화촉을 밝히심을 축하드립니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '화촉을 밝히심을 축하드립니다.')">
+                    <p class="message-text">영원한 사랑과 행복을 기원합니다</p>
+                    <button class="copy-btn" onclick="copyText(this, '영원한 사랑과 행복을 기원합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
@@ -462,29 +489,29 @@
             <div class="message-list">
                 <div class="message-card">
                     <span class="message-number">1</span>
-                    <p class="message-text">축하드립니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '축하드립니다.')">
+                    <p class="message-text">祝開業 (축 개업)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝開業')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">2</span>
-                    <p class="message-text">개업을 진심으로 축하합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '개업을 진심으로 축하합니다.')">
+                    <p class="message-text">祝發展 (축 발전)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝發展')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">3</span>
-                    <p class="message-text">사업 번창하시길 기원합니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '사업 번창하시길 기원합니다.')">
+                    <p class="message-text">祝昇進 (축 승진)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝昇進')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">4</span>
-                    <p class="message-text">승진을 축하드립니다.</p>
-                    <button class="copy-btn" onclick="copyText(this, '승진을 축하드립니다.')">
+                    <p class="message-text">祝榮轉 (축 영전)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝榮轉')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
@@ -531,6 +558,13 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="footer">
+            <p class="copyright">© 2025 베스트플라워. All Rights Reserved.</p>
+            <p>본 페이지의 모든 콘텐츠는 저작권법의 보호를 받습니다.<br>
+            무단 전재, 복제, 배포 및 상업적 이용을 금지합니다.</p>
         </div>
     </div>
 
