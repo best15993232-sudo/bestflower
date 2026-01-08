@@ -466,14 +466,15 @@
             padding: 40px 0;
         }
 
-        /* PC 레이아웃 - 미리보기 좌측 배치 */
+        /* PC 레이아웃 - 미리보기 우측 배치 */
         @media (min-width: 768px) {
             .container {
-                max-width: 1000px;
+                max-width: 1100px;
             }
 
             .main-content {
                 display: flex;
+                flex-direction: row-reverse;
                 gap: 24px;
                 align-items: flex-start;
             }
@@ -482,21 +483,33 @@
                 position: sticky;
                 top: 20px;
                 flex-shrink: 0;
-                width: 200px;
+                width: 280px;
                 margin-bottom: 0;
             }
 
             .preview-display {
-                min-height: 300px;
+                min-height: 420px;
+                padding: 25px;
             }
 
             .preview-card {
-                height: 250px;
+                height: 360px;
+                width: 55px;
+                padding: 18px 12px;
             }
 
             .content-section {
                 flex: 1;
                 min-width: 0;
+            }
+
+            .preview-hint {
+                display: none;
+            }
+
+            .preview-content.collapsed {
+                max-height: 500px;
+                opacity: 1;
             }
         }
 
@@ -876,23 +889,31 @@
                 rightText = input;
             }
 
-            // 컨테이너 높이 기준으로 글자 크기 자동 계산
-            const containerHeight = 270; // 300px - padding
+            // 반응형으로 컨테이너 높이 계산
+            function getContainerHeight() {
+                const isPC = window.innerWidth >= 768;
+                // PC: 360px - 36px padding, Mobile: 280px - 24px padding
+                return isPC ? 324 : 256;
+            }
 
             function calcFontSize(textLen) {
                 if (textLen === 0) return 20;
-                // 각 글자가 균등하게 배치되도록 계산
+                const containerHeight = getContainerHeight();
+                // 공백은 0.5배로 계산
                 let size = Math.floor(containerHeight / textLen);
                 // 최대/최소 크기 제한
-                size = Math.min(size, 24);
-                size = Math.max(size, 10);
+                size = Math.min(size, 22);
+                size = Math.max(size, 9);
                 return size;
             }
 
             // HTML 생성 함수 - 글자를 개별 span으로 분리 (공백은 space 클래스 추가)
             function createColumn(text, className) {
                 if (!text) return '';
-                const fontSize = calcFontSize(text.length);
+                // 공백 개수 계산하여 실제 필요한 공간 계산
+                const spaceCount = (text.match(/ /g) || []).length;
+                const effectiveLen = text.length - (spaceCount * 0.5);
+                const fontSize = calcFontSize(effectiveLen);
                 const chars = text.split('').map(char => {
                     if (char === ' ') {
                         return `<span class="char space"></span>`;
