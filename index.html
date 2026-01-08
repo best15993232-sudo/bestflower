@@ -345,12 +345,34 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .preview-section .preview-label {
             font-size: 14px;
             font-weight: 600;
             color: #333;
-            margin-bottom: 10px;
             display: block;
+        }
+
+        .preview-toggle {
+            background: none;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .preview-toggle:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
         }
 
         .preview-section .preview-input {
@@ -374,31 +396,63 @@
             color: #aaa;
         }
 
+        .preview-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        .preview-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+
         /* 세로쓰기 미리보기 */
         .preview-display {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            gap: 30px;
+            align-items: center;
+            gap: 20px;
             padding: 20px;
-            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 100%);
             border-radius: 8px;
-            min-height: 150px;
+            height: 250px;
+        }
+
+        .preview-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 15px 10px;
+            height: 200px;
+            min-width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .preview-column {
             writing-mode: vertical-rl;
             text-orientation: upright;
-            font-size: 24px;
             font-weight: 600;
-            letter-spacing: 4px;
-            line-height: 1.5;
             color: #333;
             white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .preview-column .char {
+            display: block;
+            text-align: center;
         }
 
         .preview-column.left {
-            color: #555;
+            color: #444;
         }
 
         .preview-column.right {
@@ -418,15 +472,16 @@
                 font-size: 14px;
             }
 
-            .preview-column {
-                font-size: 20px;
-                letter-spacing: 3px;
+            .preview-display {
+                gap: 15px;
+                padding: 15px;
+                height: 220px;
             }
 
-            .preview-display {
-                gap: 20px;
-                padding: 15px;
-                min-height: 120px;
+            .preview-card {
+                height: 180px;
+                min-width: 40px;
+                padding: 12px 8px;
             }
         }
 
@@ -464,10 +519,15 @@
 
         <!-- 문구 미리보기 섹션 -->
         <div class="preview-section">
-            <label class="preview-label">문구 미리보기</label>
-            <input type="text" id="previewInput" class="preview-input" placeholder="예: 베스트플라워 박영철 / 謹弔" oninput="updatePreview()">
-            <div id="previewDisplay" class="preview-display">
-                <p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
+            <div class="preview-header">
+                <label class="preview-label">문구 미리보기</label>
+                <button class="preview-toggle" onclick="togglePreview()">접기</button>
+            </div>
+            <div id="previewContent" class="preview-content">
+                <input type="text" id="previewInput" class="preview-input" placeholder="예: 베스트플라워 박영철 / 謹弔" oninput="updatePreview()">
+                <div id="previewDisplay" class="preview-display">
+                    <p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
+                </div>
             </div>
         </div>
 
@@ -738,6 +798,20 @@
             return document.getElementById('senderInput').value.trim();
         }
 
+        // 접기/펼치기 토글
+        function togglePreview() {
+            const content = document.getElementById('previewContent');
+            const button = document.querySelector('.preview-toggle');
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                button.textContent = '접기';
+            } else {
+                content.classList.add('collapsed');
+                button.textContent = '펼치기';
+            }
+        }
+
         // 미리보기 업데이트
         function updatePreview() {
             const input = document.getElementById('previewInput').value.trim();
@@ -761,13 +835,32 @@
                 rightText = input;
             }
 
-            // HTML 생성
+            // 글자 수에 따라 폰트 크기 계산
+            const maxLen = Math.max(leftText.length, rightText.length);
+            let fontSize = 24;
+            if (maxLen > 10) fontSize = 18;
+            if (maxLen > 15) fontSize = 14;
+            if (maxLen > 20) fontSize = 12;
+
+            // HTML 생성 함수 - 글자를 개별 span으로 분리
+            function createColumn(text, className) {
+                if (!text) return '';
+                const chars = text.split('').map(char =>
+                    `<span class="char">${char}</span>`
+                ).join('');
+                return `<div class="preview-card">
+                    <div class="preview-column ${className}" style="font-size: ${fontSize}px;">
+                        ${chars}
+                    </div>
+                </div>`;
+            }
+
             let html = '';
             if (leftText) {
-                html += `<div class="preview-column left">${leftText}</div>`;
+                html += createColumn(leftText, 'left');
             }
             if (rightText) {
-                html += `<div class="preview-column right">${rightText}</div>`;
+                html += createColumn(rightText, 'right');
             }
 
             display.innerHTML = html;
