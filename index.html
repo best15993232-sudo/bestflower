@@ -346,10 +346,15 @@
         }
 
         .preview-header {
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .preview-header:hover {
+            opacity: 0.8;
         }
 
         .preview-section .preview-label {
@@ -359,20 +364,9 @@
             display: block;
         }
 
-        .preview-toggle {
-            background: none;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 6px 12px;
+        .preview-hint {
             font-size: 12px;
-            color: #666;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .preview-toggle:hover {
-            background: #f5f5f5;
-            border-color: #ccc;
+            color: #999;
         }
 
         .preview-section .preview-input {
@@ -399,7 +393,7 @@
         .preview-content {
             overflow: hidden;
             transition: max-height 0.3s ease, opacity 0.3s ease;
-            max-height: 300px;
+            max-height: 500px;
             opacity: 1;
         }
 
@@ -418,15 +412,15 @@
             padding: 20px;
             background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 100%);
             border-radius: 8px;
-            min-height: 250px;
+            min-height: 350px;
         }
 
         .preview-card {
             background: #fff;
             border-radius: 4px;
-            padding: 12px 8px;
-            height: 200px;
-            width: 42px;
+            padding: 15px 10px;
+            height: 300px;
+            width: 45px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -453,6 +447,10 @@
             width: 100%;
         }
 
+        .preview-column .char.space {
+            flex: 0.5;
+        }
+
         .preview-column.left {
             color: #444;
         }
@@ -468,7 +466,42 @@
             padding: 40px 0;
         }
 
-        @media (max-width: 480px) {
+        /* PC 레이아웃 - 미리보기 좌측 배치 */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .main-content {
+                display: flex;
+                gap: 24px;
+                align-items: flex-start;
+            }
+
+            .preview-section {
+                position: sticky;
+                top: 20px;
+                flex-shrink: 0;
+                width: 200px;
+                margin-bottom: 0;
+            }
+
+            .preview-display {
+                min-height: 300px;
+            }
+
+            .preview-card {
+                height: 250px;
+            }
+
+            .content-section {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        /* 모바일 - 기존 레이아웃 유지 */
+        @media (max-width: 767px) {
             .preview-section .preview-input {
                 padding: 10px 12px;
                 font-size: 14px;
@@ -477,13 +510,13 @@
             .preview-display {
                 gap: 15px;
                 padding: 15px;
-                min-height: 220px;
+                min-height: 320px;
             }
 
             .preview-card {
-                height: 180px;
-                width: 38px;
-                padding: 10px 6px;
+                height: 280px;
+                width: 40px;
+                padding: 12px 8px;
             }
         }
 
@@ -519,13 +552,15 @@
             <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender()">
         </div>
 
+        <!-- PC: 미리보기 + 콘텐츠 래퍼 -->
+        <div class="main-content">
         <!-- 문구 미리보기 섹션 -->
         <div class="preview-section">
-            <div class="preview-header">
+            <div class="preview-header" onclick="togglePreview()">
                 <label class="preview-label">문구 미리보기</label>
-                <button class="preview-toggle" onclick="togglePreview()">접기</button>
+                <span class="preview-hint" id="previewHint">탭하여 열기</span>
             </div>
-            <div id="previewContent" class="preview-content">
+            <div id="previewContent" class="preview-content collapsed">
                 <input type="text" id="previewInput" class="preview-input" placeholder="예: 베스트플라워 박영철 / 謹弔" oninput="updatePreview()">
                 <div id="previewDisplay" class="preview-display">
                     <p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
@@ -533,6 +568,8 @@
             </div>
         </div>
 
+        <!-- 콘텐츠 섹션 (탭 + 목록) -->
+        <div class="content-section">
         <!-- 탭 버튼 -->
         <div class="tabs">
             <button class="tab-btn funeral active" onclick="showTab('funeral')">장례</button>
@@ -765,10 +802,12 @@
                     <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
-                        
+
             </div>
         </div>
-    
+        </div><!-- content-section -->
+        </div><!-- main-content -->
+
         <!-- 푸터 -->
         <div class="footer">
             <p class="copyright">© 2025 (주)베스트플라워. All Rights Reserved.</p>
@@ -803,14 +842,14 @@
         // 접기/펼치기 토글
         function togglePreview() {
             const content = document.getElementById('previewContent');
-            const button = document.querySelector('.preview-toggle');
+            const hint = document.getElementById('previewHint');
 
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
-                button.textContent = '접기';
+                hint.textContent = '탭하여 닫기';
             } else {
                 content.classList.add('collapsed');
-                button.textContent = '펼치기';
+                hint.textContent = '탭하여 열기';
             }
         }
 
@@ -838,7 +877,7 @@
             }
 
             // 컨테이너 높이 기준으로 글자 크기 자동 계산
-            const containerHeight = 176; // 200px - padding
+            const containerHeight = 270; // 300px - padding
 
             function calcFontSize(textLen) {
                 if (textLen === 0) return 20;
@@ -850,13 +889,16 @@
                 return size;
             }
 
-            // HTML 생성 함수 - 글자를 개별 span으로 분리
+            // HTML 생성 함수 - 글자를 개별 span으로 분리 (공백은 space 클래스 추가)
             function createColumn(text, className) {
                 if (!text) return '';
                 const fontSize = calcFontSize(text.length);
-                const chars = text.split('').map(char =>
-                    `<span class="char">${char}</span>`
-                ).join('');
+                const chars = text.split('').map(char => {
+                    if (char === ' ') {
+                        return `<span class="char space"></span>`;
+                    }
+                    return `<span class="char">${char}</span>`;
+                }).join('');
                 return `<div class="preview-card">
                     <div class="preview-column ${className}" style="font-size: ${fontSize}px;">
                         ${chars}
