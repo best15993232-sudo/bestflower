@@ -267,8 +267,8 @@
             }
 
             .tab-btn {
-                padding: 12px 8px;
-                font-size: 14px;
+                padding: 10px 4px;
+                font-size: 12px;
             }
 
             .message-card {
@@ -312,20 +312,12 @@
             font-size: 14px;
             font-weight: 600;
             color: #333;
-            margin-bottom: 8px;
-            display: block;
-        }
-        
-        .sender-section .sender-text {
-            font-size: 13px;
-            color: #333;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             display: block;
         }
 
         .sender-section .sender-input {
             width: 100%;
-            margin-top: 14px;
             padding: 12px 14px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -342,6 +334,100 @@
 
         .sender-section .sender-input::placeholder {
             color: #aaa;
+        }
+
+        /* 미리보기 섹션 */
+        .preview-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-section .preview-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .preview-section .preview-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 16px;
+        }
+
+        .preview-section .preview-input:focus {
+            outline: none;
+            border-color: #333;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-section .preview-input::placeholder {
+            color: #aaa;
+        }
+
+        /* 세로쓰기 미리보기 */
+        .preview-display {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            border-radius: 8px;
+            min-height: 150px;
+        }
+
+        .preview-column {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            line-height: 1.5;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .preview-column.left {
+            color: #555;
+        }
+
+        .preview-column.right {
+            color: #222;
+        }
+
+        .preview-empty {
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        @media (max-width: 480px) {
+            .preview-section .preview-input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .preview-column {
+                font-size: 20px;
+                letter-spacing: 3px;
+            }
+
+            .preview-display {
+                gap: 20px;
+                padding: 15px;
+                min-height: 120px;
+            }
         }
 
         .sender-divider {
@@ -367,13 +453,22 @@
         <div class="header">
             <img src="https://www.bestflower.co.kr/common/html/ds_resource/logo/L2094/images/logo_header_b.png" alt="베스트플라워" class="logo">
             <h1>화환 문구 모음</h1>
+     <p>원하시는 문구를 선택해 복사하세요. 보내는 분과 함께 복사됩니다.</p>
         </div>
 
         <!-- 보내는 분 문구 섹션 -->
         <div class="sender-section">
-            <label class="sender-label">보내는 분 문구</label>
-            <label class="sender-text">＊경조사어 리본문구와 함께 복사됩니다. 요구사항에 그대로 붙여넣기 해주세요.<br></text>
+            <label class="sender-label">자주 쓰는 보내는 분 문구</label>
             <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender()">
+        </div>
+
+        <!-- 문구 미리보기 섹션 -->
+        <div class="preview-section">
+            <label class="preview-label">문구 미리보기</label>
+            <input type="text" id="previewInput" class="preview-input" placeholder="예: 베스트플라워 박영철 / 謹弔" oninput="updatePreview()">
+            <div id="previewDisplay" class="preview-display">
+                <p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
+            </div>
         </div>
 
         <!-- 탭 버튼 -->
@@ -547,16 +642,16 @@
 
                 <div class="message-card">
                     <span class="message-number">1</span>
-                    <p class="message-text">祝昇進 (축 승진)</p>
-                    <button class="copy-btn" onclick="copyText(this, '祝昇進')">
+                    <p class="message-text">祝開業 (축 개업)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝開業')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
                         
                <div class="message-card">
                     <span class="message-number">2</span>
-                    <p class="message-text">祝榮轉 (축 영전)</p>
-                    <button class="copy-btn" onclick="copyText(this, '祝榮轉')">
+                    <p class="message-text">祝發展 (축 발전)</p>
+                    <button class="copy-btn" onclick="copyText(this, '祝發展')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
@@ -574,9 +669,7 @@
                     <p class="message-text">무궁한 발전을 기원합니다 (한글)</p>
                     <button class="copy-btn" onclick="copyText(this, '무궁한 발전을 기원합니다 (한글)')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-
                     </button>
-
                 </div>
                         
                 <div class="message-card">
@@ -643,6 +736,41 @@
         // 보내는 분 문구 가져오기
         function getSenderText() {
             return document.getElementById('senderInput').value.trim();
+        }
+
+        // 미리보기 업데이트
+        function updatePreview() {
+            const input = document.getElementById('previewInput').value.trim();
+            const display = document.getElementById('previewDisplay');
+
+            if (!input) {
+                display.innerHTML = '<p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>';
+                return;
+            }
+
+            // " / "를 기준으로 분리
+            const parts = input.split(' / ');
+            let leftText = '';
+            let rightText = '';
+
+            if (parts.length >= 2) {
+                leftText = parts[0].trim();
+                rightText = parts.slice(1).join(' / ').trim();
+            } else {
+                // 슬래시가 없으면 전체를 오른쪽에 표시
+                rightText = input;
+            }
+
+            // HTML 생성
+            let html = '';
+            if (leftText) {
+                html += `<div class="preview-column left">${leftText}</div>`;
+            }
+            if (rightText) {
+                html += `<div class="preview-column right">${rightText}</div>`;
+            }
+
+            display.innerHTML = html;
         }
 
         // 탭 전환 기능
