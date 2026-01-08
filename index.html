@@ -233,6 +233,37 @@
             fill: none;
         }
 
+        /* 미리보기 버튼 */
+        .preview-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: #e3f2fd;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .preview-btn:hover {
+            background: #bbdefb;
+        }
+
+        .preview-btn:active {
+            transform: scale(0.95);
+        }
+
+        .preview-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: #1976d2;
+            stroke-width: 2;
+            fill: none;
+        }
+
         /* 복사 완료 토스트 */
         .toast {
             position: fixed;
@@ -367,6 +398,14 @@
         .preview-hint {
             font-size: 12px;
             color: #999;
+        }
+
+        .preview-input-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 6px;
+            display: block;
         }
 
         .preview-section .preview-input {
@@ -562,7 +601,7 @@
         <!-- 보내는 분 문구 섹션 -->
         <div class="sender-section">
             <label class="sender-label">자주 쓰는 보내는 분 문구</label>
-            <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender()">
+            <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender(); updatePreview();">
         </div>
 
         <!-- PC: 미리보기 + 콘텐츠 래퍼 -->
@@ -574,9 +613,10 @@
                 <span class="preview-hint" id="previewHint">탭하여 열기</span>
             </div>
             <div id="previewContent" class="preview-content collapsed">
-                <input type="text" id="previewInput" class="preview-input" placeholder="예: 베스트플라워 박영철 / 謹弔" oninput="updatePreview()">
+                <label class="preview-input-label">리본문구</label>
+                <input type="text" id="previewInput" class="preview-input" placeholder="예: 謹弔" oninput="updatePreview()">
                 <div id="previewDisplay" class="preview-display">
-                    <p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
+                    <p class="preview-empty">보내는 분과 리본문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
                 </div>
             </div>
         </div>
@@ -601,12 +641,18 @@
                     <button class="copy-btn" onclick="copyText(this, '故人의 冥福을 빕니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('故人의 冥福을 빕니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">2</span>
                     <p class="message-text">삼가 고인의 명복을 빕니다 (한글)</p>
-                    <button class="copy-btn" onclick="copyText(this, '삼가 고인의 명복을 빕니다 (한글)')">
+                    <button class="copy-btn" onclick="copyText(this, '삼가 고인의 명복을 빕니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('삼가 고인의 명복을 빕니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
                 <div class="message-card">
@@ -615,12 +661,18 @@
                     <button class="copy-btn" onclick="copyText(this, '謹弔')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('謹弔')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">4</span>
                    <p class="message-text">삼가 弔意를 표합니다 (삼가 조의를 표합니다)</p>
                     <button class="copy-btn" onclick="copyText(this, '삼가 조의를 표합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('삼가 조의를 표합니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
                 <div class="message-card">
@@ -629,12 +681,18 @@
                     <button class="copy-btn" onclick="copyText(this, '追慕')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('追慕')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">6</span>
                      <p class="message-text">하나님의 위로가 함께하시길 기도합니다</p>
                     <button class="copy-btn" onclick="copyText(this, '하나님의 위로가 함께하시길 기도합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('하나님의 위로가 함께하시길 기도합니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
                 <div class="message-card">
@@ -643,12 +701,18 @@
                     <button class="copy-btn" onclick="copyText(this, '召天')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('召天')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">8</span>
                     <p class="message-text">極樂往生發願 (극락왕생발원)</p>
                     <button class="copy-btn" onclick="copyText(this, '極樂往生發願')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('極樂往生發願')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
             </div>
@@ -664,12 +728,18 @@
                     <button class="copy-btn" onclick="copyText(this, '祝結婚')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝結婚')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">2</span>
                     <p class="message-text">祝華婚 (축화혼/신부측)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝華婚')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝華婚')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
                 <div class="message-card">
@@ -678,6 +748,9 @@
                     <button class="copy-btn" onclick="copyText(this, '결혼을 축하드립니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('결혼을 축하드립니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
                 <div class="message-card">
                     <span class="message-number">4</span>
@@ -685,137 +758,164 @@
                     <button class="copy-btn" onclick="copyText(this, '영원한 사랑과 행복을 기원합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('영원한 사랑과 행복을 기원합니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
             </div>
         </div>
         <!-- 승진/취임 탭 콘텐츠 -->
 
         <div id="promotion" class="tab-content promotion">
-
             <p class="category-label">승진 / 취임 문구</p>
-
             <div class="message-list">
-                
                 <div class="message-card">
                     <span class="message-number">1</span>
                     <p class="message-text">祝昇進 (축 승진)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝昇進')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝昇進')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">2</span>
                     <p class="message-text">祝榮轉 (축 영전)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝榮轉')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝榮轉')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-                
                 <div class="message-card">
                     <span class="message-number">3</span>
                     <p class="message-text">祝就任 (축 취임)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝就任')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝就任')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">4</span>
                     <p class="message-text">승진을 축하드립니다</p>
                     <button class="copy-btn" onclick="copyText(this, '승진을 축하드립니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('승진을 축하드립니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">5</span>
                     <p class="message-text">영전을 축하드립니다</p>
                     <button class="copy-btn" onclick="copyText(this, '영전을 축하드립니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('영전을 축하드립니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">6</span>
                     <p class="message-text">취임을 축하드립니다</p>
                     <button class="copy-btn" onclick="copyText(this, '취임을 축하드립니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('취임을 축하드립니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-                
             </div>
         </div>
         
         <!-- 개업/이전 탭 콘텐츠 -->
         <div id="opening" class="tab-content opening">
             <p class="category-label">개업 / 이전 문구</p>
-                    <div class="message-list">
-
+            <div class="message-list">
                 <div class="message-card">
                     <span class="message-number">1</span>
                     <p class="message-text">祝開業 (축 개업)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝開業')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝開業')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-                        
-               <div class="message-card">
+                <div class="message-card">
                     <span class="message-number">2</span>
                     <p class="message-text">祝發展 (축 발전)</p>
                     <button class="copy-btn" onclick="copyText(this, '祝發展')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('祝發展')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-                        
                 <div class="message-card">
                     <span class="message-number">3</span>
                     <p class="message-text">無窮한 發展을 祈願합니다 (무궁한 발전을 기원합니다)</p>
                     <button class="copy-btn" onclick="copyText(this, '無窮한 發展을 祈願합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('無窮한 發展을 祈願합니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">4</span>
                     <p class="message-text">무궁한 발전을 기원합니다 (한글)</p>
-                    <button class="copy-btn" onclick="copyText(this, '무궁한 발전을 기원합니다 (한글)')">
+                    <button class="copy-btn" onclick="copyText(this, '무궁한 발전을 기원합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
+                    <button class="preview-btn" onclick="setPreviewText('무궁한 발전을 기원합니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
                 </div>
-                        
                 <div class="message-card">
                     <span class="message-number">5</span>
                     <p class="message-text">이전을 축하드리며 사업 번창하시기 바랍니다</p>
                     <button class="copy-btn" onclick="copyText(this, '이전을 축하드리며 사업 번창하시기 바랍니다')">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('이전을 축하드리며 사업 번창하시기 바랍니다')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-
                 <div class="message-card">
                     <span class="message-number">6</span>
                     <p class="message-text">♥들숨에 손님 날숨에 매출♥</p>
                     <button class="copy-btn" onclick="copyText(this, '♥들숨에 손님 날숨에 매출♥')">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('♥들숨에 손님 날숨에 매출♥')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-                        
                 <div class="message-card">
                     <span class="message-number">7</span>
                     <p class="message-text">돈세다 힘들면 연락주세요</p>
                     <button class="copy-btn" onclick="copyText(this, '돈세다 힘들면 연락주세요')">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('돈세다 힘들면 연락주세요')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-                        
                 <div class="message-card">
                     <span class="message-number">8</span>
                     <p class="message-text">오늘은 사장님 내일은 건물주</p>
                     <button class="copy-btn" onclick="copyText(this, '오늘은 사장님 내일은 건물주')">
-                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                    <button class="preview-btn" onclick="setPreviewText('오늘은 사장님 내일은 건물주')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-
             </div>
         </div>
         </div><!-- content-section -->
@@ -873,26 +973,18 @@
 
         // 미리보기 업데이트
         function updatePreview() {
-            const input = document.getElementById('previewInput').value.trim();
+            const senderText = document.getElementById('senderInput').value.trim();
+            const ribbonText = document.getElementById('previewInput').value.trim();
             const display = document.getElementById('previewDisplay');
 
-            if (!input) {
-                display.innerHTML = '<p class="preview-empty">위 입력창에 문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>';
+            if (!senderText && !ribbonText) {
+                display.innerHTML = '<p class="preview-empty">보내는 분과 리본문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>';
                 return;
             }
 
-            // " / "를 기준으로 분리
-            const parts = input.split(' / ');
-            let leftText = '';
-            let rightText = '';
-
-            if (parts.length >= 2) {
-                leftText = parts[0].trim();
-                rightText = parts.slice(1).join(' / ').trim();
-            } else {
-                // 슬래시가 없으면 전체를 오른쪽에 표시
-                rightText = input;
-            }
+            // 보내는 분 → 좌측, 리본문구 → 우측
+            const leftText = senderText;
+            const rightText = ribbonText;
 
             // 반응형으로 컨테이너 높이 계산
             function getContainerHeight() {
@@ -902,7 +994,7 @@
             }
 
             function calcFontSize(textLen) {
-                if (textLen === 0) return 14;
+                if (textLen === 0) return 18;
                 const containerHeight = getContainerHeight();
                 // 공백은 0.5배로 계산
                 let size = Math.floor(containerHeight / textLen);
@@ -960,6 +1052,27 @@
 
             // 선택한 탭 버튼 활성화
             document.querySelector(`.tab-btn.${tabId}`).classList.add('active');
+        }
+
+        // 미리보기에 문구 설정
+        function setPreviewText(text) {
+            const previewInput = document.getElementById('previewInput');
+            const previewContent = document.getElementById('previewContent');
+
+            // 미리보기 입력창에 문구 설정
+            previewInput.value = text;
+
+            // 미리보기 섹션 펼치기
+            if (previewContent.classList.contains('collapsed')) {
+                previewContent.classList.remove('collapsed');
+                document.getElementById('previewHint').textContent = '탭하여 닫기';
+            }
+
+            // 미리보기 업데이트
+            updatePreview();
+
+            // 토스트 표시
+            showToast('미리보기에 문구가 설정되었습니다');
         }
 
         // 텍스트 복사 기능
