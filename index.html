@@ -418,33 +418,39 @@
             padding: 20px;
             background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 100%);
             border-radius: 8px;
-            height: 250px;
+            min-height: 250px;
         }
 
         .preview-card {
             background: #fff;
             border-radius: 4px;
-            padding: 15px 12px;
+            padding: 12px 8px;
             height: 200px;
-            width: 45px;
+            width: 42px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .preview-column {
-            writing-mode: vertical-lr;
-            text-orientation: upright;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             font-weight: 600;
             color: #333;
-            text-align: justify;
-            text-align-last: justify;
             height: 100%;
+            width: 100%;
         }
 
         .preview-column .char {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
         }
 
         .preview-column.left {
@@ -471,13 +477,13 @@
             .preview-display {
                 gap: 15px;
                 padding: 15px;
-                height: 220px;
+                min-height: 220px;
             }
 
             .preview-card {
                 height: 180px;
-                min-width: 40px;
-                padding: 12px 8px;
+                width: 38px;
+                padding: 10px 6px;
             }
         }
 
@@ -831,16 +837,23 @@
                 rightText = input;
             }
 
-            // 글자 수에 따라 폰트 크기 계산
-            const maxLen = Math.max(leftText.length, rightText.length);
-            let fontSize = 24;
-            if (maxLen > 10) fontSize = 18;
-            if (maxLen > 15) fontSize = 14;
-            if (maxLen > 20) fontSize = 12;
+            // 컨테이너 높이 기준으로 글자 크기 자동 계산
+            const containerHeight = 176; // 200px - padding
+
+            function calcFontSize(textLen) {
+                if (textLen === 0) return 20;
+                // 각 글자가 균등하게 배치되도록 계산
+                let size = Math.floor(containerHeight / textLen);
+                // 최대/최소 크기 제한
+                size = Math.min(size, 24);
+                size = Math.max(size, 10);
+                return size;
+            }
 
             // HTML 생성 함수 - 글자를 개별 span으로 분리
             function createColumn(text, className) {
                 if (!text) return '';
+                const fontSize = calcFontSize(text.length);
                 const chars = text.split('').map(char =>
                     `<span class="char">${char}</span>`
                 ).join('');
