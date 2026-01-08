@@ -841,6 +841,11 @@
             }
         });
 
+        // 화면 크기 변경 시 미리보기 업데이트
+        window.addEventListener('resize', function() {
+            updatePreview();
+        });
+
         // 보내는 분 문구 저장
         function saveSender() {
             const senderInput = document.getElementById('senderInput');
@@ -897,13 +902,13 @@
             }
 
             function calcFontSize(textLen) {
-                if (textLen === 0) return 20;
+                if (textLen === 0) return 18;
                 const containerHeight = getContainerHeight();
                 // 공백은 0.5배로 계산
                 let size = Math.floor(containerHeight / textLen);
-                // 최대/최소 크기 제한
+                // 최대/최소 크기 제한 (모바일 22자, PC 30자에서 최소 도달)
                 size = Math.min(size, 18);
-                size = Math.max(size, 9);
+                size = Math.max(size, 11);
                 return size;
             }
 
@@ -936,7 +941,6 @@
             }
 
             display.innerHTML = html;
-            window.addEventListener('resize', updatePreview);
         }
 
         // 탭 전환 기능
