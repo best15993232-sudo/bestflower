@@ -1035,42 +1035,8 @@
             font-size: 14px;
         }
 
-        .selected-place-info {
+        .place-search-wrapper {
             margin-top: 8px;
-            padding: 10px 12px;
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            border-radius: 6px;
-            font-size: 13px;
-            color: #166534;
-            display: none;
-        }
-
-        .selected-place-info.show {
-            display: block;
-        }
-
-        .selected-place-info .place-detail {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .selected-place-info .place-detail span {
-            flex: 1;
-        }
-
-        .btn-clear-place {
-            background: none;
-            border: none;
-            color: #dc2626;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 2px 6px;
-        }
-
-        .btn-clear-place:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -1477,20 +1443,14 @@
 
                 <div class="order-form-group">
                     <label>배달장소 <span class="required">*</span></label>
+                    <input type="text" id="orderDeliveryPlace" placeholder="예: 서울 강남구 삼성동 OO예식장 OO홀">
                     <div class="place-search-wrapper">
                         <div class="place-search-input-group">
-                            <input type="text" id="placeSearchInput" placeholder="장소명 검색 (예: 삼성서울병원)">
+                            <input type="text" id="placeSearchInput" placeholder="장소 검색 (예: 삼성서울병원)">
                             <button type="button" class="btn-place-search" onclick="searchPlace()">검색</button>
                         </div>
                         <div id="placeSearchResults" class="place-search-results"></div>
                     </div>
-                    <div id="selectedPlaceInfo" class="selected-place-info">
-                        <div class="place-detail">
-                            <span id="selectedPlaceText"></span>
-                            <button type="button" class="btn-clear-place" onclick="clearSelectedPlace()">삭제</button>
-                        </div>
-                    </div>
-                    <input type="hidden" id="orderDeliveryPlace">
                 </div>
 
                 <div class="order-form-group">
@@ -1894,13 +1854,17 @@
                 }
 
                 // 결과 표시
-                resultsContainer.innerHTML = data.documents.map(place => `
-                    <div class="place-search-item" onclick="selectPlace('${escapeHtml(place.place_name)}', '${escapeHtml(place.road_address_name || place.address_name)}')">
-                        <div class="place-name">${escapeHtml(place.place_name)}</div>
-                        <div class="place-address">${escapeHtml(place.road_address_name || place.address_name)}</div>
-                        <div class="place-category">${escapeHtml(place.category_name)}</div>
-                    </div>
-                `).join('');
+                resultsContainer.innerHTML = data.documents.map(place => {
+                    const name = place.place_name || '';
+                    const addr = place.road_address_name || place.address_name || '';
+                    const category = place.category_name || '';
+                    return `
+                    <div class="place-search-item" onclick="selectPlace('${escapeAttr(name)}', '${escapeAttr(addr)}')">
+                        <div class="place-name">${name}</div>
+                        <div class="place-address">${addr}</div>
+                        <div class="place-category">${category}</div>
+                    </div>`;
+                }).join('');
 
             } catch (error) {
                 console.error('장소 검색 오류:', error);
@@ -1908,34 +1872,23 @@
             }
         }
 
-        // HTML 이스케이프 함수
-        function escapeHtml(text) {
+        // HTML 이스케이프 함수 (속성용)
+        function escapeAttr(text) {
             if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         }
 
         // 장소 선택
         function selectPlace(placeName, address) {
             const fullAddress = `${address} ${placeName}`;
             document.getElementById('orderDeliveryPlace').value = fullAddress;
-            document.getElementById('selectedPlaceText').textContent = fullAddress;
-            document.getElementById('selectedPlaceInfo').classList.add('show');
             document.getElementById('placeSearchResults').classList.remove('show');
             document.getElementById('placeSearchInput').value = '';
             updateOrderPreview();
+            showToast('배달장소가 입력되었습니다');
         }
 
-        // 선택된 장소 삭제
-        function clearSelectedPlace() {
-            document.getElementById('orderDeliveryPlace').value = '';
-            document.getElementById('selectedPlaceText').textContent = '';
-            document.getElementById('selectedPlaceInfo').classList.remove('show');
-            updateOrderPreview();
-        }
-
-        // 검색창 엔터키 처리
+        // 검색창 엔터키 처리 및 외부 클릭 닫기
         document.addEventListener('DOMContentLoaded', function() {
             const placeSearchInput = document.getElementById('placeSearchInput');
             if (placeSearchInput) {
