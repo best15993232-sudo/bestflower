@@ -566,16 +566,15 @@
         <div class="header">
             <img src="https://www.bestflower.co.kr/common/html/ds_resource/logo/L2094/images/logo_header_b.png" alt="베스트플라워" class="logo">
             <h1>화환 문구 모음</h1>
-     <p>원하시는 문구를 선택해 복사하세요. 보내는 분과 함께 복사됩니다.</p>
         </div>
 
         <!-- 보내는 분 문구 섹션 -->
         <div class="sender-section">
-            <label class="sender-label">자주 쓰는 보내는 분 문구</label>
+            <label class="sender-label">보내는 분</label>
             <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender(); updatePreview();">
-            <div class="sender-divider"></div>
             <label class="sender-label">리본문구(경조사어)</label>
             <input type="text" id="previewInput" class="sender-input" placeholder="예: 謹弔" oninput="updatePreview()">
+            <label class="sender-label">＊복사시 보내는 분과 경조사어가 함께 복사됩니다</label>
         </div>
 
         <!-- PC: 미리보기 + 콘텐츠 래퍼 -->
@@ -588,7 +587,7 @@
             </div>
             <div id="previewContent" class="preview-content collapsed">
                 <div id="previewDisplay" class="preview-display">
-                    <p class="preview-empty">보내는 분과 리본문구를 입력하면<br>세로쓰기 미리보기가 표시됩니다</p>
+                    <p class="preview-empty">보내는 분과 리본문구를 입력하면<br>미리보기가 표시됩니다</p>
                 </div>
             </div>
         </div>
@@ -640,10 +639,10 @@
                 <div class="message-card">
                     <span class="message-number">4</span>
                    <p class="message-text">삼가 弔意를 표합니다 (삼가 조의를 표합니다)</p>
-                    <button class="copy-btn" onclick="copyText(this, '삼가 조의를 표합니다')">
+                    <button class="copy-btn" onclick="copyText(this, '삼가 弔意를 표합니다')">
                         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
-                    <button class="preview-btn" onclick="setPreviewText('삼가 조의를 표합니다')">
+                    <button class="preview-btn" onclick="setPreviewText('삼가 弔意를 표합니다')">
                         <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
@@ -966,10 +965,10 @@
             }
 
             function calcFontSize(textLen) {
-                if (textLen === 0) return 18;
+                if (textLen === 0) return 14;
                 const containerHeight = getContainerHeight();
                 // 공백은 0.5배로 계산
-                let size = Math.floor(containerHeight / textLen);
+                let size = Math.floor(containerHeight / (textLen*1.2));
                 // 최대/최소 크기 제한 (모바일 22자, PC 30자에서 최소 도달)
                 size = Math.min(size, 18);
                 size = Math.max(size, 11);
