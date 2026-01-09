@@ -935,6 +935,143 @@
         .go-to-phrases button:hover {
             background: #1565c0;
         }
+
+        /* 카카오맵 검색 스타일 */
+        .place-search-wrapper {
+            position: relative;
+        }
+
+        .place-search-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .place-search-input-group input {
+            flex: 1;
+        }
+
+        .btn-place-search {
+            padding: 12px 16px;
+            background: #fae100;
+            color: #3c1e1e;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s ease;
+        }
+
+        .btn-place-search:hover {
+            background: #f5d800;
+        }
+
+        .place-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .place-search-results.show {
+            display: block;
+        }
+
+        .place-search-item {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .place-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .place-search-item:hover {
+            background: #f9f9f9;
+        }
+
+        .place-search-item .place-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .place-search-item .place-address {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .place-search-item .place-category {
+            font-size: 11px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .place-search-loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .place-search-empty {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .selected-place-info {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #166534;
+            display: none;
+        }
+
+        .selected-place-info.show {
+            display: block;
+        }
+
+        .selected-place-info .place-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-place-info .place-detail span {
+            flex: 1;
+        }
+
+        .btn-clear-place {
+            background: none;
+            border: none;
+            color: #dc2626;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 2px 6px;
+        }
+
+        .btn-clear-place:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -1340,7 +1477,20 @@
 
                 <div class="order-form-group">
                     <label>배달장소 <span class="required">*</span></label>
-                    <input type="text" id="orderDeliveryPlace" placeholder="예: 서울 강남구 삼성동 OO예식장 OO홀">
+                    <div class="place-search-wrapper">
+                        <div class="place-search-input-group">
+                            <input type="text" id="placeSearchInput" placeholder="장소명 검색 (예: 삼성서울병원)">
+                            <button type="button" class="btn-place-search" onclick="searchPlace()">검색</button>
+                        </div>
+                        <div id="placeSearchResults" class="place-search-results"></div>
+                    </div>
+                    <div id="selectedPlaceInfo" class="selected-place-info">
+                        <div class="place-detail">
+                            <span id="selectedPlaceText"></span>
+                            <button type="button" class="btn-clear-place" onclick="clearSelectedPlace()">삭제</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="orderDeliveryPlace">
                 </div>
 
                 <div class="order-form-group">
@@ -1704,6 +1854,108 @@
                 window.open('http://pf.kakao.com/_MGnWn/chat', '_blank');
             }, 500);
         }
+
+        // 카카오맵 장소 검색
+        const KAKAO_REST_API_KEY = 'b4e075e67694fab43612a53a521e4a88';
+
+        async function searchPlace() {
+            const searchInput = document.getElementById('placeSearchInput');
+            const resultsContainer = document.getElementById('placeSearchResults');
+            const query = searchInput.value.trim();
+
+            if (!query) {
+                showToast('검색어를 입력해주세요');
+                return;
+            }
+
+            // 로딩 표시
+            resultsContainer.innerHTML = '<div class="place-search-loading">검색 중...</div>';
+            resultsContainer.classList.add('show');
+
+            try {
+                const response = await fetch(
+                    `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&size=10`,
+                    {
+                        headers: {
+                            'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}`
+                        }
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error('검색 실패');
+                }
+
+                const data = await response.json();
+
+                if (data.documents.length === 0) {
+                    resultsContainer.innerHTML = '<div class="place-search-empty">검색 결과가 없습니다</div>';
+                    return;
+                }
+
+                // 결과 표시
+                resultsContainer.innerHTML = data.documents.map(place => `
+                    <div class="place-search-item" onclick="selectPlace('${escapeHtml(place.place_name)}', '${escapeHtml(place.road_address_name || place.address_name)}')">
+                        <div class="place-name">${escapeHtml(place.place_name)}</div>
+                        <div class="place-address">${escapeHtml(place.road_address_name || place.address_name)}</div>
+                        <div class="place-category">${escapeHtml(place.category_name)}</div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('장소 검색 오류:', error);
+                resultsContainer.innerHTML = '<div class="place-search-empty">검색 중 오류가 발생했습니다</div>';
+            }
+        }
+
+        // HTML 이스케이프 함수
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 장소 선택
+        function selectPlace(placeName, address) {
+            const fullAddress = `${address} ${placeName}`;
+            document.getElementById('orderDeliveryPlace').value = fullAddress;
+            document.getElementById('selectedPlaceText').textContent = fullAddress;
+            document.getElementById('selectedPlaceInfo').classList.add('show');
+            document.getElementById('placeSearchResults').classList.remove('show');
+            document.getElementById('placeSearchInput').value = '';
+            updateOrderPreview();
+        }
+
+        // 선택된 장소 삭제
+        function clearSelectedPlace() {
+            document.getElementById('orderDeliveryPlace').value = '';
+            document.getElementById('selectedPlaceText').textContent = '';
+            document.getElementById('selectedPlaceInfo').classList.remove('show');
+            updateOrderPreview();
+        }
+
+        // 검색창 엔터키 처리
+        document.addEventListener('DOMContentLoaded', function() {
+            const placeSearchInput = document.getElementById('placeSearchInput');
+            if (placeSearchInput) {
+                placeSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        searchPlace();
+                    }
+                });
+            }
+
+            // 검색 결과 외부 클릭시 닫기
+            document.addEventListener('click', function(e) {
+                const wrapper = document.querySelector('.place-search-wrapper');
+                const results = document.getElementById('placeSearchResults');
+                if (wrapper && results && !wrapper.contains(e.target)) {
+                    results.classList.remove('show');
+                }
+            });
+        });
     </script>
 </body>
 </html>
