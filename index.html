@@ -102,7 +102,7 @@
         }
 
         .main-tab-btn.phrases.active {
-            background: #4a4a4a;
+            background: #0b5c55;
         }
 
         .main-tab-btn.order.active {
@@ -520,6 +520,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
+            font-family: 'Gungsuh', '궁서체', '궁서', serif;
             font-weight: 600;
             color: #333;
             height: 100%;
@@ -913,7 +914,7 @@
         }
 
         .go-to-phrases button {
-            background: #4a4a4a;
+            background: #0b5c55;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -925,7 +926,7 @@
         }
 
         .go-to-phrases button:hover {
-            background: #333;
+            background: #1565c0;
         }
     </style>
 </head>
@@ -951,11 +952,11 @@
         <div id="phrasesTab" class="main-tab-content active">
             <!-- 보내는 분 문구 섹션 -->
             <div class="sender-section">
-                <label class="sender-label">보내는 분</label>
+                <label class="sender-label">리본문구 보내는분</label>
                 <input type="text" id="senderInput" class="sender-input" placeholder="예: 베스트플라워 대표이사 홍길동" oninput="saveSender(); updatePreview();">
                 <label class="sender-label">리본문구 경조사어</label>
                 <input type="text" id="previewInput" class="sender-input" placeholder="예: 謹弔" oninput="updatePreview()">
-                <label class="sender-text">＊복사시 보내는 분과 경조사어가 함께 복사됩니다</label>
+                <label class="sender-text">＊문구 복사시 보내는 분과 경조사어가 함께 복사됩니다</label>
             </div>
 
             <!-- PC: 미리보기 + 콘텐츠 래퍼 -->
@@ -1341,12 +1342,14 @@
                 </div>
 
                 <div class="order-form-group">
-                    <label>경조사어</label>
+                    <label>리본문구 경조사어 <span class="required">*</span></label>
+
                     <input type="text" id="orderCondolence" placeholder="예: 謹弔">
                 </div>
 
                 <div class="order-form-group">
-                    <label>보내는분</label>
+                    <label>리본문구 보내는분 <span class="required">*</span></label>
+
                     <input type="text" id="orderRibbonText" placeholder="예: (주)베스트플라워 대표이사 홍길동">
                 </div>
 
