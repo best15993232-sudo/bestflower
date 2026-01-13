@@ -337,23 +337,23 @@
         /* 복사 완료 토스트 */
         .toast {
             position: fixed;
-            bottom: 30px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translate(-50%, -50%) scale(0.8);
             background: #333;
             color: #fff;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 14px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 500;
             opacity: 0;
             transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
         .toast.show {
-            transform: translateX(-50%) translateY(0);
+            transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
 
@@ -1426,11 +1426,31 @@
 
         .image-zoom-hint {
             position: absolute;
-            bottom: 20px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
+        }
+
+        .image-zoom-select-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 40px;
+            background: #0b5c55;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .image-zoom-select-btn:hover {
+            background: #094a44;
         }
     </style>
     <!-- 카카오맵 SDK -->
@@ -1861,15 +1881,15 @@
                 </div>
 
                 <div class="order-form-group">
-                    <label>리본문구 경조사어 <span class="required">*</span></label>
-
-                    <input type="text" id="orderCondolence" placeholder="예: 謹弔">
-                </div>
-
-                <div class="order-form-group">
                     <label>리본문구 보내는분 <span class="required">*</span></label>
 
                     <input type="text" id="orderRibbonText" placeholder="예: (주)베스트플라워 대표이사 홍길동">
+                </div>
+
+                <div class="order-form-group">
+                    <label>리본문구 경조사어 <span class="required">*</span></label>
+
+                    <input type="text" id="orderCondolence" placeholder="예: 謹弔">
                 </div>
 
                 <div class="order-form-group">
@@ -2290,14 +2310,14 @@
 6. 배달장소: ${deliveryPlace || '(미입력)'}
 7. 배달일시: ${deliveryTime || '즉시'}`;
 
-            if (condolence) {
-                orderText += `
-8. 경조사어: ${condolence}`;
-            }
-
             if (ribbonText) {
                 orderText += `
-9. 보내는분: ${ribbonText}`;
+8. 보내는분: ${ribbonText}`;
+            }
+
+            if (condolence) {
+                orderText += `
+9. 경조사어: ${condolence}`;
             }
 
             if (request) {
@@ -2354,7 +2374,7 @@
                 <div class="product-image-item ${img.grade === currentGradeInModal ? 'selected' : ''}"
                      data-grade="${img.grade}"
                      onclick="selectGradeInModal('${img.grade}')">
-                    <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}')">
+                    <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}', '${img.grade}')">
                     <div class="grade-label">${img.grade}</div>
                 </div>
             `).join('');
@@ -2414,8 +2434,12 @@
         }
 
         // 이미지 확대 보기
-        function openImageZoom(imageUrl) {
+        // 현재 확대 중인 이미지의 등급 저장
+        let currentZoomedGrade = '';
+
+        function openImageZoom(imageUrl, grade) {
             event.stopPropagation(); // 등급 선택 이벤트 방지
+            currentZoomedGrade = grade;
             document.getElementById('zoomedImage').src = imageUrl;
             document.getElementById('imageZoomOverlay').classList.add('active');
             document.body.style.overflow = 'hidden'; // 스크롤 방지
@@ -2425,6 +2449,25 @@
         function closeImageZoom() {
             document.getElementById('imageZoomOverlay').classList.remove('active');
             document.body.style.overflow = ''; // 스크롤 복구
+            currentZoomedGrade = '';
+        }
+
+        // 확대 오버레이 배경 클릭 처리
+        function handleZoomOverlayClick(event) {
+            // 이미지나 버튼 클릭이 아닌 배경 클릭시에만 닫기
+            if (event.target === document.getElementById('imageZoomOverlay')) {
+                closeImageZoom();
+            }
+        }
+
+        // 확대 화면에서 선택하기
+        function selectFromZoom(event) {
+            event.stopPropagation();
+            if (currentZoomedGrade) {
+                selectGradeInModal(currentZoomedGrade);
+                closeImageZoom();
+                confirmProductSelection();
+            }
         }
 
         // ESC 키로 이미지 확대 닫기
@@ -2611,10 +2654,11 @@
     </script>
 
     <!-- 이미지 확대 오버레이 -->
-    <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="closeImageZoom()">
+    <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="handleZoomOverlayClick(event)">
         <button class="image-zoom-close" onclick="closeImageZoom()">×</button>
         <img id="zoomedImage" src="" alt="확대 이미지">
-        <div class="image-zoom-hint">클릭하여 닫기</div>
+        <div class="image-zoom-hint">배경 클릭하여 닫기</div>
+        <button class="image-zoom-select-btn" id="zoomSelectBtn" onclick="selectFromZoom(event)">선택하기</button>
     </div>
 </body>
 </html>
