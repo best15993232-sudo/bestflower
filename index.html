@@ -426,9 +426,10 @@
         .sender-section .sender-text {
             font-size: 14px;
             color: #333;
-            margin-top: 10px;
+            margin-top: 12px;
             margin-bottom: 10px;
             display: block;
+            background: linear-gradient(to top, #fffeaf 50%, transparent 50%);
         }
 
         .sender-section .sender-input {
@@ -1294,8 +1295,8 @@
         .product-description {
             background: #fff;
             border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 20px;
+            padding: 10px;
+            margin-bottom: 10px;
             font-size: 14px;
             line-height: 1.6;
             color: #333;
@@ -1305,10 +1306,9 @@
         .product-description .tip-box {
             background: #f5f5f5;
             border-radius: 6px;
-            padding: 10px 12px;
             margin-top: 10px;
             font-size: 13px;
-            color: #666;
+            background: linear-gradient(to top, #fffeaf 50%, transparent 50%);
         }
 
         .product-modal-buttons {
@@ -2418,7 +2418,7 @@
 
                 // TIP이 있는 경우 (동양란)
                 if (data.tip) {
-                    html += `<div class="tip-box">💡TIP ${data.tip}</div>`;
+                    html += `<div class="tip-box">💡<strong>TIP</strong> ${data.tip}</div>`;
                 }
 
                 descEl.innerHTML = html;
