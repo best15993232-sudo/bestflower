@@ -1267,6 +1267,12 @@
             aspect-ratio: 1;
             object-fit: cover;
             display: block;
+            cursor: zoom-in;
+            position: relative;
+        }
+
+        .product-image-item img:hover {
+            opacity: 0.9;
         }
 
         .product-image-item .grade-label {
@@ -1367,6 +1373,64 @@
                 font-size: 12px;
                 padding: 6px 4px;
             }
+        }
+
+        /* 이미지 확대 오버레이 */
+        .image-zoom-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .image-zoom-overlay.active {
+            display: flex;
+        }
+
+        .image-zoom-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-zoom-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .image-zoom-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .image-zoom-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
         }
     </style>
     <!-- 카카오맵 SDK -->
@@ -1750,12 +1814,9 @@
                         </button>
                         <button type="button" class="category-tab-btn" data-category="flowers" onclick="openProductModal('flowers')">꽃바구니</button>
                     </div>
-                    <!-- 선택된 카테고리와 등급 표시 -->
+                    <!-- 선택된 카테고리와 등급 저장 -->
                     <input type="hidden" id="selectedCategory" value="">
                     <input type="hidden" id="selectedGrade" value="고급">
-                    <div id="selectedProductDisplay" style="padding: 10px; background: #f0f0f0; border-radius: 8px; font-size: 14px; color: #666;">
-                        상품을 선택해주세요
-                    </div>
                 </div>
 
                 <!-- 상세상품명 (생략가능) -->
@@ -2293,7 +2354,7 @@
                 <div class="product-image-item ${img.grade === currentGradeInModal ? 'selected' : ''}"
                      data-grade="${img.grade}"
                      onclick="selectGradeInModal('${img.grade}')">
-                    <img src="${img.url}" alt="${data.name} ${img.grade}">
+                    <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}')">
                     <div class="grade-label">${img.grade}</div>
                 </div>
             `).join('');
@@ -2352,6 +2413,27 @@
             document.getElementById('productModal').classList.remove('show');
         }
 
+        // 이미지 확대 보기
+        function openImageZoom(imageUrl) {
+            event.stopPropagation(); // 등급 선택 이벤트 방지
+            document.getElementById('zoomedImage').src = imageUrl;
+            document.getElementById('imageZoomOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden'; // 스크롤 방지
+        }
+
+        // 이미지 확대 닫기
+        function closeImageZoom() {
+            document.getElementById('imageZoomOverlay').classList.remove('active');
+            document.body.style.overflow = ''; // 스크롤 복구
+        }
+
+        // ESC 키로 이미지 확대 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageZoom();
+            }
+        });
+
         // 상품 선택 확정
         function confirmProductSelection() {
             if (!currentCategory) {
@@ -2364,12 +2446,6 @@
             // 선택된 카테고리와 등급 저장
             document.getElementById('selectedCategory').value = currentCategory;
             document.getElementById('selectedGrade').value = currentGradeInModal;
-
-            // 선택된 상품 표시 업데이트
-            const displayEl = document.getElementById('selectedProductDisplay');
-            displayEl.style.background = '#e8f5e9';
-            displayEl.style.color = '#2e7d32';
-            displayEl.innerHTML = `<strong>${data.name} ${currentGradeInModal}</strong>`;
 
             // 카테고리 탭 버튼 활성화 표시
             document.querySelectorAll('.category-tab-btn').forEach(btn => {
@@ -2533,5 +2609,12 @@
             }
         });
     </script>
+
+    <!-- 이미지 확대 오버레이 -->
+    <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="closeImageZoom()">
+        <button class="image-zoom-close" onclick="closeImageZoom()">×</button>
+        <img id="zoomedImage" src="" alt="확대 이미지">
+        <div class="image-zoom-hint">클릭하여 닫기</div>
+    </div>
 </body>
 </html>
