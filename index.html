@@ -24,11 +24,6 @@
             min-height: 100vh;
         }
 
-        mark {
-            background-color: #fffeaf;
-            border-radius: 7px;
-        }
-
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -1153,7 +1148,7 @@
         }
 
         .category-tab-btn {
-            padding: 10px 14px;
+            padding: 12px 16px;
             border: 2px solid #f9f9f9;
             background: #f9f9f9;
             border-radius: 8px;
@@ -1163,6 +1158,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 1;
+            min-height: 44px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .category-tab-btn:hover {
@@ -1257,6 +1256,8 @@
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .product-image-item:hover {
@@ -1283,11 +1284,16 @@
 
         .product-image-item .grade-label {
             text-align: center;
-            padding: 8px 4px;
+            padding: 12px 4px;
             font-size: 14px;
             font-weight: 600;
             color: #333;
             background: #f5f5f5;
+            cursor: pointer;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .product-image-item.selected .grade-label {
@@ -1308,10 +1314,9 @@
         }
 
         .product-description .tip-box {
-            background: #f5f5f5;
-            border-radius: 6px;
             margin-top: 10px;
             font-size: 13px;
+            color: #666
         }
 
         .product-modal-buttons {
@@ -1357,8 +1362,9 @@
             }
 
             .category-tab-btn {
-                padding: 8px 10px;
+                padding: 10px 12px;
                 font-size: 12px;
+                min-height: 44px;
             }
 
             .product-modal-content {
@@ -1370,8 +1376,9 @@
             }
 
             .product-image-item .grade-label {
-                font-size: 12px;
-                padding: 6px 4px;
+                font-size: 13px;
+                padding: 10px 4px;
+                min-height: 48px;
             }
         }
 
@@ -1466,7 +1473,7 @@
         <div class="main-tabs">
             <button class="main-tab-btn phrases active" onclick="showMainTab('phrases')">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                문구 보기
+                리본문구
             </button>
             <button class="main-tab-btn order" onclick="showMainTab('order')">
                 <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.58 2 11c0 2.84 1.88 5.33 4.7 6.77L5.6 21l4.08-2.41c.76.11 1.53.16 2.32.16 5.5 0 10-3.58 10-8s-4.5-8-10-8z"/></svg>
@@ -1474,7 +1481,7 @@
             </button>
         </div>
 
-        <!-- 문구 보기 탭 콘텐츠 -->
+        <!-- 리본문구 보기 탭 콘텐츠 -->
         <div id="phrasesTab" class="main-tab-content active">
             <!-- 보내는 분 문구 섹션 -->
             <div class="sender-section">
@@ -1806,7 +1813,7 @@
             <!-- 문구 선택 안내 -->
             <div class="go-to-phrases">
                 <p>경조사어/보내는분 문구를 선택하려면</p>
-                <button onclick="showMainTab('phrases')">문구 보기 탭으로 이동</button>
+                <button onclick="showMainTab('phrases')">리본문구 보러가기</button>
             </div>
 
             <!-- 주문서 작성 섹션 -->
@@ -1841,9 +1848,9 @@
 
                 <!-- 상세상품명 (생략가능) -->
                 <div class="order-form-group">
-                    <label>상세상품명 <span class="optional">(생략가능)</span></label>
-                    <p class="description">추가 요청사항이 있으면 입력하세요 (예: 흰색 계열로)</p>
-                    <input type="text" id="orderProductDetail" placeholder="예: 분홍색 계열로">
+                    <label>종류·색상 <span class="optional">(생략시 이미지 상품 배송)</span></label>
+                    <p class="description">원하시는 종류나 색상이 있으면 알려주세요</p>
+                    <input type="text" id="orderProductDetail" placeholder="예: 스투키, 흰색화분">
                 </div>
 
                 <div class="order-form-group">
@@ -1962,7 +1969,7 @@
             </div>
             <div class="product-modal-buttons">
                 <button type="button" class="btn-modal-cancel" onclick="closeProductModal()">취소</button>
-                <button type="button" class="btn-modal-confirm" onclick="confirmProductSelection()">선택 완료</button>
+                <button type="button" class="btn-modal-confirm" onclick="confirmProductSelection()">선택하기</button>
             </div>
         </div>
     </div>
@@ -2012,7 +2019,7 @@
                     { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10325_01.jpg&S=660x660' } // 금기 금투각
                 ],
                 description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.',
-                tip: '<mark>동양란은 잎의 노란색 무늬가 선명하고 균형있게 나타나는 품종일수록 희소성이 높습니다.</mark>'
+                tip: '동양란은 잎의 노란색 무늬가 선명하고 균형있게 나타나는 품종일수록 희소성이 높습니다.'
             },
             phalaenopsis: {
                 name: '서양란',
@@ -2290,8 +2297,7 @@
             }
 
             let orderText = `
-【 화환 주문서 】
-
+【 베스트플라워 주문서 】
 
 1. 상품명: ${productName}
 2. 주문자명: ${customerName || '(미입력)'}
@@ -2372,12 +2378,20 @@
             const grid = document.getElementById('productImagesGrid');
             grid.innerHTML = data.images.map((img, index) => `
                 <div class="product-image-item ${img.grade === currentGradeInModal ? 'selected' : ''}"
-                     data-grade="${img.grade}"
-                     onclick="selectGradeInModal('${img.grade}')">
-                    <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}', '${img.grade}')">
-                    <div class="grade-label">${img.grade}</div>
+                     data-grade="${img.grade}">
+                    <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}', '${img.grade}'); event.stopPropagation();">
+                    <div class="grade-label" onclick="selectGradeInModal('${img.grade}'); event.stopPropagation();">${img.grade}</div>
                 </div>
             `).join('');
+
+            // 이미지 아이템 전체 클릭 이벤트 (이미지와 레이블 제외 영역)
+            grid.querySelectorAll('.product-image-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        selectGradeInModal(this.dataset.grade);
+                    }
+                });
+            });
 
             // 설명 업데이트
             updateProductDescription(category, currentGradeInModal);
