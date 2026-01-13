@@ -1148,8 +1148,8 @@
 
         .category-tab-btn {
             padding: 10px 14px;
-            border: 2px solid #ddd;
-            background: #fff;
+            border: 2px solid #f9f9f9;
+            background: #f9f9f9;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 500;
@@ -1285,7 +1285,7 @@
 
         /* 상품 설명 영역 */
         .product-description {
-            background: #f9f9f9;
+            background: #fff;
             border-radius: 8px;
             padding: 16px;
             margin-bottom: 20px;
@@ -2369,7 +2369,7 @@
             const displayEl = document.getElementById('selectedProductDisplay');
             displayEl.style.background = '#e8f5e9';
             displayEl.style.color = '#2e7d32';
-            displayEl.innerHTML = `<strong>${data.name} ${currentGradeInModal}</strong> 선택됨`;
+            displayEl.innerHTML = `<strong>${data.name} ${currentGradeInModal}</strong>`;
 
             // 카테고리 탭 버튼 활성화 표시
             document.querySelectorAll('.category-tab-btn').forEach(btn => {
