@@ -1202,18 +1202,19 @@
             color: #333;
         }
 
-        /* 좌우 이동 버튼 */
-        .product-nav-buttons {
+        /* 좌우 이동 버튼 - 슬라이더 양 옆 배치 */
+        .product-slider-container {
             display: flex;
-            gap: 6px;
+            align-items: center;
+            gap: 8px;
         }
 
         .product-nav-btn {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border: 1px solid #ddd;
             background: #fff;
-            border-radius: 6px;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1221,11 +1222,13 @@
             transition: all 0.2s ease;
             font-size: 14px;
             color: #666;
+            flex-shrink: 0;
         }
 
         .product-nav-btn:hover {
             border-color: #0b5c55;
             color: #0b5c55;
+            background: #f0f9f8;
         }
 
         .product-nav-btn:disabled {
@@ -1233,10 +1236,17 @@
             cursor: not-allowed;
         }
 
+        .product-nav-btn:disabled:hover {
+            background: #fff;
+            border-color: #ddd;
+            color: #666;
+        }
+
         /* 상품 슬라이더 */
         .product-slider-wrapper {
             position: relative;
             overflow: hidden;
+            flex: 1;
         }
 
         .product-slider {
@@ -1345,8 +1355,8 @@
             }
 
             .product-nav-btn {
-                width: 26px;
-                height: 26px;
+                width: 28px;
+                height: 28px;
                 font-size: 12px;
             }
         }
@@ -2079,8 +2089,8 @@
                 name: '꽃다발',
                 images: [
                     { grade: '보랏빛 기본', price: '54,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0002_01.png&S=660x660' },
-                    { grade: '고급', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BD0002_01.png&S=660x660' },
-                    { grade: '최고급', price: '91,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BD0003_01.png&S=660x660' }
+                    { grade: '노랑빛 중형', price: '68,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0003_06.png&S=660x660' },
+                    { grade: '대형 장미꽃다발', price: '105,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0009_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
             }
@@ -2154,16 +2164,12 @@
                     <div class="product-group" data-product-key="${productKey}">
                         <div class="product-group-header">
                             <span class="product-group-title">${product.name}</span>
-                            ${needsNav ? `
-                                <div class="product-nav-buttons">
-                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', -1)" data-nav="${productKey}-prev">&lt;</button>
-                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', 1)" data-nav="${productKey}-next">&gt;</button>
-                                </div>
-                            ` : ''}
                         </div>
                         <div class="product-group-description">${product.description}</div>
-                        <div class="product-slider-wrapper">
-                            <div class="product-slider" id="slider-${productKey}">
+                        <div class="product-slider-container">
+                            ${needsNav ? `<button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', -1)" data-nav="${productKey}-prev">&lt;</button>` : ''}
+                            <div class="product-slider-wrapper">
+                                <div class="product-slider" id="slider-${productKey}">
                                 ${product.images.map(img => {
                                     const key = `${productKey}_${img.grade}`;
                                     const isSelected = selectedProductKey === key;
@@ -2182,7 +2188,9 @@
                                         </div>
                                     `;
                                 }).join('')}
+                                </div>
                             </div>
+                            ${needsNav ? `<button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', 1)" data-nav="${productKey}-next">&gt;</button>` : ''}
                         </div>
                     </div>
                 `;
