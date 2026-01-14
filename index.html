@@ -2001,11 +2001,11 @@
 
                 <div class="order-notice" style="margin-top: 12px;">
                     <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
-                    <p class="time-info" style="display: flex; align-items: center;">
+                    <p class="time-info" style="display: flex; justify-content: center; align-items: center;">
                         <span>무통장입금</span>
                         <span style="margin: 0 8px;">|</span>
                         <span style="display: flex; flex-direction: column; align-items: flex-start;">
-                            <span>하나은행 <span style="letter-spacing: 0;">768-910006-74504</span></span>
+                            <span>하나은행 768-910006-74504</span>
                             <span>(주)베스트플라워</span>
                         </span>
                     </p>
@@ -2065,31 +2065,32 @@
 
     <script>
         // 상품 카테고리 데이터
+        // ※ 금액 수정: 각 등급의 price 값을 수정하세요 (예: '88,000원')
         const productData = {
             funeral: {
                 name: '근조화환',
                 images: [
-                    { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1015_01.png&S=660x660' },
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660' },
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660' } // 근조4단
+                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1015_01.png&S=660x660' },
+                    { grade: '고급', price: '98,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660' },
+                    { grade: '최고급', price: '113,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660' } // 근조4단
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
             congrats: {
                 name: '축하화환',
                 images: [
-                    { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10510_01.png&S=660x660' },
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10518_01.png&S=660x660' },
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660' } // 축하4단
+                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10510_01.png&S=660x660' },
+                    { grade: '고급', price: '96,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10518_01.png&S=660x660' },
+                    { grade: '최고급', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660' } // 축하4단
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
             plant: {
                 name: '관엽식물',
                 images: [
-                    { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' }, // 스노우사파이어
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660' }, // 금전수 바닥
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660' } // 떡갈 바닥
+                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' }, // 스노우사파이어
+                    { grade: '고급', price: '86,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660' }, // 금전수 바닥
+                    { grade: '최고급', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660' } // 떡갈 바닥
                 ],
                 description: '<div class="plant-desc-basic">승진선물 추천! 책상 위에 올라가기 좋은 사이즈예요.</div><div class="plant-desc-advanced">개업화분 추천!</div><div class="plant-desc-premium">개업&사무실 이전 선물 추천! 인테리어로 적격이에요.</div>',
                 gradeDescriptions: {
@@ -2103,9 +2104,9 @@
             orchid: {
                 name: '동양란',
                 images: [
-                    { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660' },
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' }, // 황룡금 투각
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' } // 태양금 금투각
+                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660' },
+                    { grade: '고급', price: '100,100원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' }, // 황룡금 투각
+                    { grade: '최고급', price: '136,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' } // 태양금 금투각
                 ],
                 description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.',
                 tip: '동양란은 잎의 노란색 무늬가 선명하고 균형있게 나타나는 품종일수록 희소성이 높습니다.'
@@ -2113,18 +2114,18 @@
             phalaenopsis: {
                 name: '서양란',
                 images: [
-                    { grade: '기본', url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601144917332_03e2f3eb-9afd-4a0e-93f6-a6ca0f6bd634.png' },
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10446_01.png&S=660x660' },
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10431_01.png&S=660x660' }
+                    { grade: '기본', price: '63,700원', url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601144917332_03e2f3eb-9afd-4a0e-93f6-a6ca0f6bd634.png' },
+                    { grade: '고급', price: '81,900원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10446_01.png&S=660x660' },
+                    { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10431_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃줄기의 개수가 증가합니다.'
             },
             flowers: {
                 name: '꽃바구니',
                 images: [
-                    { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660' },
-                    { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0002_01.png&S=660x660' },
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0003_01.png&S=660x660' }
+                    { grade: '기본', price: '000,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660' },
+                    { grade: '고급', price: '000,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0002_01.png&S=660x660' },
+                    { grade: '최고급', price: '000,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0003_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
             }
@@ -2470,7 +2471,7 @@
                      data-grade="${img.grade}"
                      onclick="selectGradeInModal('${img.grade}')">
                     <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}', '${img.grade}'); event.stopPropagation();">
-                    <div class="grade-label">${img.grade}<span class="grade-price">000,000원</span></div>
+                    <div class="grade-label">${img.grade}<span class="grade-price">${img.price}</span></div>
                 </div>
             `).join('');
 
