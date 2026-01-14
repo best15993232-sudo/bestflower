@@ -1143,46 +1143,215 @@
             background: #fae100;
         }
 
-        /* 상품 카테고리 탭 스타일 */
-        .product-category-tabs {
+        /* 메인 카테고리 탭 스타일 */
+        .main-category-tabs {
             display: flex;
-            flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            background: #f5f5f5;
+            padding: 6px;
+            border-radius: 10px;
         }
 
-        .category-tab-btn {
-            padding: 12px 16px;
-            border: 2px solid #f9f9f9;
-            background: #f9f9f9;
+        .main-category-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
             border-radius: 8px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             color: #666;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .category-tab-btn:hover {
-            border-color: #0b5c55;
+        .main-category-btn:hover {
+            background: #e8e8e8;
         }
 
-        .category-tab-btn.active {
-            border-color: #0b5c55;
+        .main-category-btn.active {
             background: #0b5c55;
             color: #fff;
         }
 
-        .category-tab-btn .recommend-badge {
-            font-size: 10px;
-            color: #e91e63;
-            display: block;
-            margin-top: 2px;
-            pointer-events: none;
+        /* 상품 그리드 컨테이너 */
+        .product-grid-container {
+            margin-bottom: 16px;
         }
 
-        .category-tab-btn.active .recommend-badge {
-            color: #fce4ec;
+        /* 상품 분류 그룹 */
+        .product-group {
+            margin-bottom: 20px;
+        }
+
+        .product-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .product-group-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* 좌우 이동 버튼 */
+        .product-nav-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .product-nav-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-nav-btn:hover {
+            border-color: #0b5c55;
+            color: #0b5c55;
+        }
+
+        .product-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* 상품 슬라이더 */
+        .product-slider-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-slider {
+            display: flex;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            flex: 0 0 calc(33.333% - 7px);
+            min-width: calc(33.333% - 7px);
+            max-width: calc(33.333% - 7px);
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        .product-card:hover {
+            border-color: #0b5c55;
+        }
+
+        .product-card.selected {
+            border-color: #0b5c55;
+            box-shadow: 0 4px 12px rgba(11, 92, 85, 0.3);
+        }
+
+        .product-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-card .product-info {
+            text-align: center;
+            padding: 10px 6px;
+            background: #f9f9f9;
+        }
+
+        .product-card .product-grade {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .product-card .product-price {
+            font-size: 12px;
+            font-weight: 500;
+            color: #0b5c55;
+        }
+
+        .product-card.selected .product-info {
+            background: #0b5c55;
+        }
+
+        .product-card.selected .product-grade,
+        .product-card.selected .product-price {
+            color: #fff;
+        }
+
+        /* 상품 설명 영역 */
+        .product-group-description {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 상품 그룹 구분선 */
+        .product-group-divider {
+            height: 1px;
+            background: #e8e8e8;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 480px) {
+            .main-category-btn {
+                padding: 10px 4px;
+                font-size: 13px;
+            }
+
+            .product-group-title {
+                font-size: 14px;
+            }
+
+            .product-card {
+                flex: 0 0 calc(33.333% - 7px);
+                min-width: calc(33.333% - 7px);
+                max-width: calc(33.333% - 7px);
+            }
+
+            .product-card .product-grade {
+                font-size: 12px;
+            }
+
+            .product-card .product-price {
+                font-size: 11px;
+            }
+
+            .product-nav-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
         }
 
         /* 상품 이미지 모달 스타일 */
@@ -1901,27 +2070,25 @@
                 <!-- 상품 카테고리 선택 -->
                 <div class="order-form-group">
                     <label>상품 선택 <span class="required">*</span></label>
-                    <p class="description">카테고리를 선택하면 예시 이미지를 확인할 수 있습니다</p>
-                    <div class="product-category-tabs">
-                        <button type="button" class="category-tab-btn" data-category="funeral" onclick="openProductModal('funeral')">근조화환</button>
-                        <button type="button" class="category-tab-btn" data-category="congrats" onclick="openProductModal('congrats')">축하화환</button>
-                        <button type="button" class="category-tab-btn" data-category="plant" onclick="openProductModal('plant')">
-                            관엽식물
-                            <span class="recommend-badge">개업&승진선물 추천</span>
-                        </button>
-                        <button type="button" class="category-tab-btn" data-category="orchid" onclick="openProductModal('orchid')">
-                            동양란
-                            <span class="recommend-badge">승진선물 추천</span>
-                        </button>
-                        <button type="button" class="category-tab-btn" data-category="phalaenopsis" onclick="openProductModal('phalaenopsis')">
-                            서양란
-                            <span class="recommend-badge">승진선물 추천</span>
-                        </button>
-                        <button type="button" class="category-tab-btn" data-category="flowers" onclick="openProductModal('flowers')">꽃바구니</button>
+                    <p class="description">카테고리와 상품을 선택해주세요</p>
+
+                    <!-- 메인 카테고리 탭 -->
+                    <div class="main-category-tabs">
+                        <button type="button" class="main-category-btn active" data-main-category="wreath" onclick="switchMainCategory('wreath')">화환</button>
+                        <button type="button" class="main-category-btn" data-main-category="opening" onclick="switchMainCategory('opening')">개업선물</button>
+                        <button type="button" class="main-category-btn" data-main-category="promotion" onclick="switchMainCategory('promotion')">승진선물</button>
+                        <button type="button" class="main-category-btn" data-main-category="flower" onclick="switchMainCategory('flower')">꽃선물</button>
                     </div>
+
+                    <!-- 상품 그리드 (상품분류별 그룹) -->
+                    <div class="product-grid-container" id="productGridContainer">
+                        <!-- JavaScript로 동적 생성 -->
+                    </div>
+
                     <!-- 선택된 카테고리와 등급 저장 -->
                     <input type="hidden" id="selectedCategory" value="">
                     <input type="hidden" id="selectedGrade" value="고급">
+                    <input type="hidden" id="selectedProductKey" value="">
                 </div>
 
                 <!-- 상세상품명 (생략가능) -->
@@ -2064,15 +2231,16 @@
     </div>
 
     <script>
-        // 상품 카테고리 데이터
-        // ※ 금액 수정: 각 등급의 price 값을 수정하세요 (예: '88,000원')
+        // =====================================================
+        // 상품 데이터 (금액 수정: 각 등급의 price 값을 수정하세요)
+        // =====================================================
         const productData = {
             funeral: {
                 name: '근조화환',
                 images: [
                     { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1015_01.png&S=660x660' },
                     { grade: '고급', price: '98,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660' },
-                    { grade: '최고급', price: '113,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660' } // 근조4단
+                    { grade: '최고급', price: '113,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
@@ -2081,35 +2249,27 @@
                 images: [
                     { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10510_01.png&S=660x660' },
                     { grade: '고급', price: '96,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10518_01.png&S=660x660' },
-                    { grade: '최고급', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660' } // 축하4단
+                    { grade: '최고급', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
             plant: {
-                name: '관엽식물',
+                name: '관엽',
                 images: [
-                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' }, // 스노우사파이어
-                    { grade: '고급', price: '86,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660' }, // 금전수 바닥
-                    { grade: '최고급', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660' } // 떡갈 바닥
+                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' },
+                    { grade: '고급', price: '86,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660' },
+                    { grade: '최고급', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660' }
                 ],
-                description: '<div class="plant-desc-basic">승진선물 추천! 책상 위에 올라가기 좋은 사이즈예요.</div><div class="plant-desc-advanced">개업화분 추천!</div><div class="plant-desc-premium">개업&사무실 이전 선물 추천! 인테리어로 적격이에요.</div>',
-                gradeDescriptions: {
-                    '기본': '승진선물 추천! 책상 위에 올라가기 좋은 사이즈예요.',
-                    '고급': '개업화분 스테디셀러! 어디에 두어도 잘 어울려요.',
-                    '최고급': '개업&사무실 이전 선물 추천! 인테리어에 공기정화까지 책임져요.'
-                },
-                useGradeDesc: true,
-                basicHighlight: true
+                description: '승진/개업 선물로 인기! 기본→고급→최고급 순으로 화분 사이즈가 커집니다.'
             },
             orchid: {
                 name: '동양란',
                 images: [
                     { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660' },
-                    { grade: '고급', price: '100,100원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' }, // 황룡금 투각
-                    { grade: '최고급', price: '136,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' } // 태양금 금투각
+                    { grade: '고급', price: '100,100원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' },
+                    { grade: '최고급', price: '136,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' }
                 ],
-                description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.',
-                tip: '동양란은 잎의 노란색 무늬가 선명하고 균형있게 나타나는 품종일수록 희소성이 높습니다.'
+                description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.'
             },
             phalaenopsis: {
                 name: '서양란',
@@ -2128,12 +2288,199 @@
                     { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0003_01.png&S=660x660' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
+            },
+            bouquet: {
+                name: '꽃다발',
+                images: [
+                    { grade: '기본', price: '45,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BD0001_01.png&S=660x660' },
+                    { grade: '고급', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BD0002_01.png&S=660x660' },
+                    { grade: '최고급', price: '91,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BD0003_01.png&S=660x660' }
+                ],
+                description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
             }
+        };
+
+        // =====================================================
+        // 메인 카테고리별 상품 매핑
+        // =====================================================
+        const categoryMapping = {
+            wreath: ['funeral', 'congrats'],                    // 화환: 근조화환, 축하화환
+            opening: ['congrats', 'plant', 'phalaenopsis'],     // 개업선물: 축하화환, 관엽, 서양란
+            promotion: ['plant', 'orchid', 'phalaenopsis'],     // 승진선물: 관엽, 동양란, 서양란
+            flower: ['flowers', 'bouquet']                      // 꽃선물: 꽃바구니, 꽃다발
         };
 
         // 현재 선택된 상품 정보
         let currentCategory = '';
         let currentGradeInModal = '고급';
+        let currentMainCategory = 'wreath';
+        let selectedProductKey = '';  // 선택된 상품 키 (예: 'funeral_고급')
+
+        // 슬라이더 상태 저장 (상품분류별 현재 위치)
+        const sliderPositions = {};
+
+        // =====================================================
+        // 메인 카테고리 전환 함수
+        // =====================================================
+        function switchMainCategory(mainCategory) {
+            currentMainCategory = mainCategory;
+
+            // 탭 버튼 활성화 상태 업데이트
+            document.querySelectorAll('.main-category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.mainCategory === mainCategory) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 상품 그리드 렌더링
+            renderProductGrid(mainCategory);
+
+            // 선택 초기화
+            selectedProductKey = '';
+            document.getElementById('selectedCategory').value = '';
+            document.getElementById('selectedGrade').value = '';
+            document.getElementById('selectedProductKey').value = '';
+
+            // 주문서 미리보기 업데이트
+            updateOrderPreview();
+        }
+
+        // =====================================================
+        // 상품 그리드 렌더링 함수 (상품분류별 그룹)
+        // =====================================================
+        function renderProductGrid(mainCategory) {
+            const products = categoryMapping[mainCategory];
+            const container = document.getElementById('productGridContainer');
+
+            let html = '';
+            products.forEach((productKey, index) => {
+                const product = productData[productKey];
+                const itemCount = product.images.length;
+                const needsNav = itemCount > 3; // 3개 초과시 좌우 버튼 표시
+
+                // 슬라이더 위치 초기화
+                if (!sliderPositions[productKey]) {
+                    sliderPositions[productKey] = 0;
+                }
+
+                html += `
+                    <div class="product-group" data-product-key="${productKey}">
+                        <div class="product-group-header">
+                            <span class="product-group-title">${product.name}</span>
+                            ${needsNav ? `
+                                <div class="product-nav-buttons">
+                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', -1)" data-nav="${productKey}-prev">&lt;</button>
+                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', 1)" data-nav="${productKey}-next">&gt;</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="product-slider-wrapper">
+                            <div class="product-slider" id="slider-${productKey}">
+                                ${product.images.map(img => {
+                                    const key = `${productKey}_${img.grade}`;
+                                    const isSelected = selectedProductKey === key;
+                                    return `
+                                        <div class="product-card ${isSelected ? 'selected' : ''}"
+                                             data-key="${key}"
+                                             data-category="${productKey}"
+                                             data-grade="${img.grade}"
+                                             onclick="selectProduct('${productKey}', '${img.grade}')">
+                                            <img src="${img.url}" alt="${product.name} ${img.grade}">
+                                            <div class="product-info">
+                                                <div class="product-grade">${img.grade}</div>
+                                                <div class="product-price">${img.price}</div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        <div class="product-group-description">${product.description}</div>
+                    </div>
+                `;
+
+                // 마지막 그룹이 아니면 구분선 추가
+                if (index < products.length - 1) {
+                    html += '<div class="product-group-divider"></div>';
+                }
+            });
+
+            container.innerHTML = html;
+
+            // 슬라이더 초기 상태 및 버튼 상태 업데이트
+            products.forEach(productKey => {
+                updateSliderButtons(productKey);
+            });
+        }
+
+        // =====================================================
+        // 슬라이더 이동 함수
+        // =====================================================
+        function slideProducts(productKey, direction) {
+            const slider = document.getElementById(`slider-${productKey}`);
+            const product = productData[productKey];
+            const itemCount = product.images.length;
+            const maxPosition = Math.max(0, itemCount - 3); // 최대 이동 가능 위치
+
+            // 현재 위치 업데이트
+            sliderPositions[productKey] = Math.max(0, Math.min(maxPosition, sliderPositions[productKey] + direction));
+
+            // 슬라이더 이동 (카드 너비 + gap 기준)
+            const cardWidth = slider.querySelector('.product-card').offsetWidth + 10; // 10px gap
+            slider.style.transform = `translateX(-${sliderPositions[productKey] * cardWidth}px)`;
+
+            // 버튼 상태 업데이트
+            updateSliderButtons(productKey);
+        }
+
+        // =====================================================
+        // 슬라이더 버튼 상태 업데이트
+        // =====================================================
+        function updateSliderButtons(productKey) {
+            const product = productData[productKey];
+            const itemCount = product.images.length;
+            const maxPosition = Math.max(0, itemCount - 3);
+            const currentPos = sliderPositions[productKey] || 0;
+
+            const prevBtn = document.querySelector(`[data-nav="${productKey}-prev"]`);
+            const nextBtn = document.querySelector(`[data-nav="${productKey}-next"]`);
+
+            if (prevBtn) {
+                prevBtn.disabled = currentPos <= 0;
+            }
+            if (nextBtn) {
+                nextBtn.disabled = currentPos >= maxPosition;
+            }
+        }
+
+        // =====================================================
+        // 상품 선택 함수
+        // =====================================================
+        function selectProduct(productKey, grade) {
+            const key = `${productKey}_${grade}`;
+            selectedProductKey = key;
+
+            // 선택 상태 업데이트
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.remove('selected');
+                if (card.dataset.key === key) {
+                    card.classList.add('selected');
+                }
+            });
+
+            // hidden 필드 업데이트
+            document.getElementById('selectedCategory').value = productKey;
+            document.getElementById('selectedGrade').value = grade;
+            document.getElementById('selectedProductKey').value = key;
+
+            // 현재 카테고리/등급 업데이트 (호환성)
+            currentCategory = productKey;
+            currentGradeInModal = grade;
+
+            // 주문서 미리보기 업데이트
+            updateOrderPreview();
+        }
 
         // 페이지 로드 시 저장된 보내는 분 문구 불러오기
         document.addEventListener('DOMContentLoaded', function() {
@@ -2155,6 +2502,9 @@
                     field.addEventListener('input', updateOrderPreview);
                 }
             });
+
+            // 초기 상품 그리드 렌더링 (화환 카테고리)
+            renderProductGrid('wreath');
 
             // 초기 주문서 미리보기 업데이트
             updateOrderPreview();
