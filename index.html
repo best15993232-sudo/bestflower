@@ -350,6 +350,9 @@
             z-index: 10001;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
             pointer-events: none;
+            text-align: center;
+            word-break: keep-all;
+            max-width: 280px;
         }
 
         .toast.show {
@@ -1283,6 +1286,10 @@
             background: #f5f5f5;
             cursor: pointer;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
         }
 
         .product-image-item.selected .grade-label {
@@ -1969,7 +1976,7 @@
                 <div class="order-preview" id="orderPreview">주문서를 작성하시면 여기에 미리보기가 표시됩니다.</div>
 
                 <div class="order-notice">
-                    <p><span class=highlight>✔️카카오톡 채팅창에 붙여넣기 해주세요</span></p>
+                    <p><span class=highlight>✔️ 카카오톡 채팅창에 붙여넣기 해주세요</span></p>
                 </div>
 
                 <div class="order-buttons">
@@ -1985,6 +1992,7 @@
 
                 <div class="order-notice" style="margin-top: 12px;">
                     <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
+                    <p class="time-info">무통장입금 | 하나은행 768-910006-74504 (주)베스트플라워</p>
                 </div>
             </div>
         </div><!-- orderTab -->
