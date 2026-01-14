@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>화환 문구 모음</title>
     <style>
         @font-face {
@@ -1287,9 +1288,16 @@
             cursor: pointer;
             pointer-events: none;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 44px;
+        }
+
+        .product-image-item .grade-label .grade-price {
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 4px;
         }
 
         .product-image-item.selected .grade-label {
@@ -1948,7 +1956,7 @@
                     <label>배달장소 <span class="required">*</span></label>
                     <div class="place-input-wrapper">
                         <input type="text" id="orderDeliveryPlace" placeholder="예: 서울 강남구 삼성동 OO예식장 OO홀">
-                        <button type="button" class="btn-place-search" onclick="openPlaceSearchModal()">상호검색</button>
+                        <button type="button" class="btn-place-search" onclick="openPlaceSearchModal()">주소검색</button>
                     </div>
                 </div>
 
@@ -1966,7 +1974,7 @@
                 <div class="order-form-group">
                     <label>리본문구 경조사어 <span class="required">*</span></label>
 
-                    <input type="text" id="orderCondolence" placeholder="예: 謹弔">
+                    <input type="text" id="orderCondolence" placeholder="예: 祝結婚">
                 </div>
 
                 <div class="order-form-group">
@@ -1993,7 +2001,14 @@
 
                 <div class="order-notice" style="margin-top: 12px;">
                     <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
-                    <p class="time-info">무통장입금 | 하나은행 768-910006-74504 (주)베스트플라워</p>
+                    <p class="time-info" style="display: flex; align-items: center;">
+                        <span>무통장입금</span>
+                        <span style="margin: 0 8px;">|</span>
+                        <span style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <span>하나은행 <span style="letter-spacing: 0;">768-910006-74504</span></span>
+                            <span>(주)베스트플라워</span>
+                        </span>
+                    </p>
                 </div>
             </div>
         </div><!-- orderTab -->
@@ -2090,7 +2105,7 @@
                 images: [
                     { grade: '기본', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660' },
                     { grade: '고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' }, // 황룡금 투각
-                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10325_01.jpg&S=660x660' } // 금기 금투각
+                    { grade: '최고급', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' } // 태양금 금투각
                 ],
                 description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.',
                 tip: '동양란은 잎의 노란색 무늬가 선명하고 균형있게 나타나는 품종일수록 희소성이 높습니다.'
@@ -2455,7 +2470,7 @@
                      data-grade="${img.grade}"
                      onclick="selectGradeInModal('${img.grade}')">
                     <img src="${img.url}" alt="${data.name} ${img.grade}" onclick="openImageZoom('${img.url}', '${img.grade}'); event.stopPropagation();">
-                    <div class="grade-label">${img.grade}</div>
+                    <div class="grade-label">${img.grade}<span class="grade-price">000,000원</span></div>
                 </div>
             `).join('');
 
