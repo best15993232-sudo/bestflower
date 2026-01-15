@@ -1202,33 +1202,38 @@
             color: #333;
         }
 
-        /* 좌우 이동 버튼 - 슬라이더 양 옆 배치 */
+        /* 좌우 이동 버튼 - < ○○ > 형식 */
         .product-slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-nav-buttons {
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .product-nav-btn {
-            width: 32px;
-            height: 32px;
-            border: 1px solid #ddd;
-            background: #fff;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
-            font-size: 14px;
-            color: #666;
-            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #999;
         }
 
         .product-nav-btn:hover {
-            border-color: #0b5c55;
-            color: #0b5c55;
-            background: #f0f9f8;
+            color: #666;
         }
 
         .product-nav-btn:disabled {
@@ -1237,16 +1242,33 @@
         }
 
         .product-nav-btn:disabled:hover {
-            background: #fff;
-            border-color: #ddd;
-            color: #666;
+            color: #999;
+        }
+
+        /* 페이지 인디케이터 (dots) */
+        .product-nav-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .product-nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .product-nav-dot.active {
+            background: #999;
         }
 
         /* 상품 슬라이더 */
         .product-slider-wrapper {
             position: relative;
             overflow: hidden;
-            flex: 1;
+            width: 100%;
         }
 
         .product-slider {
@@ -1355,9 +1377,23 @@
             }
 
             .product-nav-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+            }
+
+            .product-nav-buttons {
+                margin-top: 8px;
+                gap: 6px;
+            }
+
+            .product-nav-dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .product-nav-dots {
+                gap: 4px;
             }
         }
 
@@ -1438,6 +1474,23 @@
 
         .image-zoom-select-btn:hover {
             background: #094a44;
+        }
+
+        /* 이미지 확대 - 상품 설명 (하단 배치) */
+        .image-zoom-description {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 90%;
+            word-break: keep-all;
         }
 
         /* 카톡 문의 플로팅 버튼 */
@@ -1970,7 +2023,7 @@
                 </div>
 
                 <div class="order-notice" style="margin-top: 12px;">
-                    <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
+                    <p class="time-info" style="margin: 0 10px;">카톡주문 가능시간 | 평일 09:00~18:00</p>
                     <p class="time-info" style="display: flex; justify-content: center; align-items: center;">
                         <span>무통장입금</span>
                         <span style="margin: 0 8px;">|</span>
@@ -2021,76 +2074,76 @@
             funeral: {
                 name: '근조화환',
                 images: [
-                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1015_01.png&S=660x660' },
-                    { grade: '고급', price: '98,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660' },
-                    { grade: '최고급', price: '113,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660' }
+                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1015_01.png&S=660x660', desc: '기본 구성의 근조화환입니다.' },
+                    { grade: '고급', price: '98,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660', desc: '포인트 꽃이 추가된 고급 구성입니다.' },
+                    { grade: '최고급', price: '113,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660', desc: '최고급 꽃으로 구성된 프리미엄 화환입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
             congrats: {
                 name: '축하화환',
                 images: [
-                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10510_01.png&S=660x660' },
-                    { grade: '고급', price: '96,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10518_01.png&S=660x660' },
-                    { grade: '최고급', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660' }
+                    { grade: '기본', price: '78,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10510_01.png&S=660x660', desc: '기본 구성의 축하화환입니다.' },
+                    { grade: '고급', price: '96,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10518_01.png&S=660x660', desc: '포인트 꽃이 추가된 고급 구성입니다.' },
+                    { grade: '최고급', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10526_01.png&S=660x660', desc: '최고급 꽃으로 구성된 프리미엄 화환입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 포인트 꽃이 증가합니다.'
             },
             opening_plant: {
                 name: '관엽화분',
                 images: [
-                    { grade: '금전수', price: '84,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660' },
-                    { grade: '뱅갈고무나무', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1042_01.png&S=660x660' },
-                    { grade: '떡갈고무나무', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660' },
-                    { grade: '극락조', price: '104,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1060_01.png&S=660x660' },
-                    { grade: 'S자 홍콩야자', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1020_01.png&S=660x660' }
+                    { grade: '금전수', price: '84,400원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1046_01.png&S=660x660', desc: '돈이 들어온다는 의미의 금전수입니다.' },
+                    { grade: '뱅갈고무나무', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1042_01.png&S=660x660', desc: '공기정화 능력이 뛰어난 뱅갈고무나무입니다.' },
+                    { grade: '떡갈고무나무', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1039_01.png&S=660x660', desc: '큰 잎이 매력적인 떡갈고무나무입니다.' },
+                    { grade: '극락조', price: '104,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1060_01.png&S=660x660', desc: '이국적인 분위기의 극락조입니다.' },
+                    { grade: 'S자 홍콩야자', price: '122,800원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1020_01.png&S=660x660', desc: '우아한 곡선미의 S자 홍콩야자입니다.' }
                 ],
                 description: '개업&확장이전 스테디셀러! 인테리어에 공기정화까지 책임져요.'
             },
             promotion_plant: {
                 name: '관엽화분',
                 images: [
-                    { grade: '스노우사파이어', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' },
-                    { grade: '안스리움', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1036_01.png&S=660x660' },
-                    { grade: '금전수', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1035_01.png&S=660x660' },
-                    { grade: '스노우사파이어', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660' },
-                    { grade: '인삼팬더', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1019_01.png&S=660x660' }
+                    { grade: '스노우사파이어', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660', desc: '화이트 컬러가 세련된 스노우사파이어입니다.' },
+                    { grade: '안스리움', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1036_01.png&S=660x660', desc: '붉은 꽃이 포인트인 안스리움입니다.' },
+                    { grade: '금전수', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1035_01.png&S=660x660', desc: '돈이 들어온다는 의미의 금전수입니다.' },
+                    { grade: '스노우사파이어', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1016_01.png&S=660x660', desc: '화이트 컬러가 세련된 스노우사파이어입니다.' },
+                    { grade: '인삼팬더', price: '95,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/YK1019_01.png&S=660x660', desc: '귀여운 모양의 인삼팬더입니다.' }
                 ],
                 description: '승진선물로 인기! 책상 위에 올라가기 좋은 사이즈예요.'
             },
             orchid: {
                 name: '동양란',
                 images: [
-                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660' },
-                    { grade: '고급', price: '100,100원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660' },
-                    { grade: '최고급', price: '136,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660' }
+                    { grade: '기본', price: '63,700원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/WF1039_01.png&S=660x660', desc: '기본 화분의 동양란입니다.' },
+                    { grade: '고급', price: '100,100원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10308_01.png&S=660x660', desc: '고급 화분에 담긴 동양란입니다.' },
+                    { grade: '최고급', price: '136,500원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10299_01.png&S=660x660', desc: '최고급 품종의 동양란입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 화분과 품종이 달라집니다.'
             },
             phalaenopsis: {
                 name: '서양란',
                 images: [
-                    { grade: '기본', price: '63,700원', url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601144917332_03e2f3eb-9afd-4a0e-93f6-a6ca0f6bd634.png' },
-                    { grade: '고급', price: '81,900원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10446_01.png&S=660x660' },
-                    { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10431_01.png&S=660x660' }
+                    { grade: '기본', price: '63,700원', url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601144917332_03e2f3eb-9afd-4a0e-93f6-a6ca0f6bd634.png', desc: '1대 구성의 서양란입니다.' },
+                    { grade: '고급', price: '81,900원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10446_01.png&S=660x660', desc: '2대 구성의 서양란입니다.' },
+                    { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/10431_01.png&S=660x660', desc: '3대 구성의 프리미엄 서양란입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃줄기의 개수가 증가합니다.'
             },
             flowers: {
                 name: '꽃바구니',
                 images: [
-                    { grade: '기본', price: '54,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660' },
-                    { grade: '고급', price: '77,300원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0002_01.png&S=660x660' },
-                    { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0003_01.png&S=660x660' }
+                    { grade: '기본', price: '54,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660', desc: '아담한 사이즈의 기본 꽃바구니입니다.' },
+                    { grade: '고급', price: '77,300원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0002_01.png&S=660x660', desc: '볼륨감 있는 고급 꽃바구니입니다.' },
+                    { grade: '최고급', price: '109,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0003_01.png&S=660x660', desc: '풍성한 최고급 꽃바구니입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
             },
             bouquet: {
                 name: '꽃다발',
                 images: [
-                    { grade: '보랏빛 기본', price: '54,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0002_01.png&S=660x660' },
-                    { grade: '노랑빛 중형', price: '68,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0003_06.png&S=660x660' },
-                    { grade: '대형 장미꽃다발', price: '105,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0009_01.png&S=660x660' }
+                    { grade: '보랏빛 기본', price: '54,600원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0002_01.png&S=660x660', desc: '보랏빛 컬러의 기본 꽃다발입니다.' },
+                    { grade: '노랑빛 중형', price: '68,200원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0003_06.png&S=660x660', desc: '노랑빛 컬러의 중형 꽃다발입니다.' },
+                    { grade: '대형 장미꽃다발', price: '105,000원', url: 'https://www.bestflower.co.kr/IS/U=bestflower/HT0009_01.png&S=660x660', desc: '빨간 장미로 가득한 대형 꽃다발입니다.' }
                 ],
                 description: '기본→고급→최고급 순으로 꽃의 개수와 볼륨이 증가합니다.'
             }
@@ -2167,7 +2220,6 @@
                         </div>
                         <div class="product-group-description">${product.description}</div>
                         <div class="product-slider-container">
-                            ${needsNav ? `<button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', -1)" data-nav="${productKey}-prev">&lt;</button>` : ''}
                             <div class="product-slider-wrapper">
                                 <div class="product-slider" id="slider-${productKey}">
                                 ${product.images.map(img => {
@@ -2190,7 +2242,15 @@
                                 }).join('')}
                                 </div>
                             </div>
-                            ${needsNav ? `<button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', 1)" data-nav="${productKey}-next">&gt;</button>` : ''}
+                            ${needsNav ? `
+                                <div class="product-nav-buttons">
+                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', -1)" data-nav="${productKey}-prev">&lt;</button>
+                                    <div class="product-nav-dots" data-dots="${productKey}">
+                                        ${Array.from({length: itemCount - 2}, (_, i) => `<div class="product-nav-dot ${i === 0 ? 'active' : ''}" data-dot-index="${i}"></div>`).join('')}
+                                    </div>
+                                    <button type="button" class="product-nav-btn" onclick="slideProducts('${productKey}', 1)" data-nav="${productKey}-next">&gt;</button>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
@@ -2246,6 +2306,15 @@
             }
             if (nextBtn) {
                 nextBtn.disabled = currentPos >= maxPosition;
+            }
+
+            // dot 인디케이터 업데이트
+            const dotsContainer = document.querySelector(`[data-dots="${productKey}"]`);
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.product-nav-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentPos);
+                });
             }
         }
 
@@ -2529,6 +2598,9 @@
                 if (productDetail) {
                     productName += ` - ${productDetail}`;
                 }
+            } else if (productDetail) {
+                // 상품 미선택이지만 종류/색상 기입시
+                productName = productDetail;
             }
 
             let orderText = `
@@ -2607,6 +2679,22 @@
             currentZoomedGrade = grade;
             currentZoomedProductKey = productKey || '';
             document.getElementById('zoomedImage').src = imageUrl;
+
+            // 상품 개별 설명 표시 (이미지 하단)
+            const descEl = document.getElementById('imageZoomDescription');
+            if (productKey && productData[productKey]) {
+                const product = productData[productKey];
+                const imageData = product.images.find(img => img.grade === grade);
+                if (imageData && imageData.desc) {
+                    descEl.textContent = imageData.desc;
+                    descEl.style.display = 'block';
+                } else {
+                    descEl.style.display = 'none';
+                }
+            } else {
+                descEl.style.display = 'none';
+            }
+
             document.getElementById('imageZoomOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -2790,6 +2878,7 @@
     <!-- 이미지 확대 오버레이 -->
     <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="handleZoomOverlayClick(event)">
         <button class="image-zoom-close" onclick="closeImageZoom()">×</button>
+        <div class="image-zoom-description" id="imageZoomDescription"></div>
         <img id="zoomedImage" src="" alt="확대 이미지">
         <div class="image-zoom-hint">배경 클릭하여 닫기</div>
         <button class="image-zoom-select-btn" id="zoomSelectBtn" onclick="selectFromZoom(event)">선택하기</button>
