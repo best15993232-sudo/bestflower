@@ -1037,12 +1037,6 @@
             margin-bottom: 8px;
         }
 
-        .delivery-restriction-notice .alt-product-card .alt-product-desc {
-            font-size: 11px;
-            color: #888;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
 
         .delivery-restriction-notice .btn-change-product {
             width: 100%;
@@ -2398,83 +2392,70 @@
             congrats_rice: {
                 name: '쌀화환',
                 price: '95,500원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1004_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1004_01.png&S=660x660'
             },
             congrats_rice_ribbon: {
                 name: '쌀화환',
                 dataName: '쌀리본',
                 price: '95,500원',
-                url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601165965351_96b6a168-cbb1-4cd2-b63b-2ee002604152.png',
-                desc: '해당 지역 및 예식장은 해당 형태의 제품만 반입됩니다'
+                url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601165965351_96b6a168-cbb1-4cd2-b63b-2ee002604152.png'
             },
             congrats_kimhae_objet: {
                 name: '[김해] 신화환',
                 price: '87,300원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1006_01.png&S=660x660',
-                desc: '100% 생화로 제작된 축하화환'
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1006_01.png&S=660x660'
             },
             congrats_kimhae_objet_2: {
                 name: '[김해] 신화환 고급형',
                 price: '114,600원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1007_01.png&S=660x660',
-                desc: '100% 생화로 제작된 2단 축하화환'
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1007_01.png&S=660x660'
             },
             congrats_basket: {
                 name: '꽃바구니',
                 price: '54,600원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660'
             },
             // 근조화환 대체상품
             funeral_objet: {
                 name: '신화환',
                 price: '78,200원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1018_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1018_01.png&S=660x660'
             },
             funeral_objet_2: {
                 name: '신화환 고급형',
                 price: '109,200원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1019_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1019_01.png&S=660x660'
             },
             funeral_rice: {
                 name: '쌀화환',
                 price: '95,500원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1025_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1025_01.png&S=660x660'
             },
             funeral_basket: {
                 name: '근조바구니',
                 price: '63,700원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1020_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1020_01.png&S=660x660'
             },
             funeral_basket_2: {
                 name: '근조바구니 고급형',
                 price: '72,800원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1021_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1021_01.png&S=660x660'
             },
             funeral_basket_3: {
                 name: '근조바구니 최고급형',
                 price: '118,300원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1022_01.png&S=660x660',
-                desc: ''
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1022_01.png&S=660x660'
             },
             // 기본형 제외 고급형부터
             funeral_advanced: {
                 name: '근조화환 고급형',
                 price: '98,200원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660',
-                desc: '생화 & 포인트 꽃 추가! 고급 3단 화환'
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660'
             },
             funeral_premium: {
                 name: '근조화환 최고급형',
                 price: '113,700원',
-                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660',
-                desc: '차별화된 크기, 4단 화환'
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660'
             }
         };
 
@@ -2608,7 +2589,7 @@
                 for (const place of deliveryRestrictions.congrats_ribbon_only) {
                     if (addr.includes(place)) {
                         restriction = 'congrats_ribbon_only';
-                        noticeText = '해당 예식장은 화환 반입 후 리본만 전달됩니다. 일반 축하화환으로 주문 가능합니다.';
+                        noticeText = '해당 예식장은 화환 배송 후 혼주에게 리본만 전달됩니다.';
                         products = [];
                         break;
                     }
@@ -2742,7 +2723,6 @@
                     <img src="${product.url}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
                     <div class="alt-product-name">${product.name}</div>
                     <div class="alt-product-price">${product.price}</div>
-                    ${product.desc ? `<div class="alt-product-desc">${product.desc}</div>` : ''}
                     <button class="btn-change-product" onclick="selectAlternativeProduct(${index})">변경하기</button>
                 </div>
             `).join('');
