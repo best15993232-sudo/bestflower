@@ -1691,6 +1691,18 @@
             color: #333;
         }
 
+        .delivery-photos-header .title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .delivery-photos-header .update-date {
+            font-size: 12px;
+            font-weight: 400;
+            color: #999;
+        }
+
         .delivery-slider-container {
             position: relative;
             overflow: hidden;
@@ -1782,7 +1794,10 @@
         <!-- 배송사진 섹션 -->
         <div class="delivery-photos-section">
             <div class="delivery-photos-header">
-                <h3>실제 배송사진</h3>
+                <div class="title-wrap">
+                    <h3>실제 배송사진</h3>
+                    <span class="update-date" id="deliveryUpdateDate"></span>
+                </div>
                 <a href="https://www.bestflower.co.kr/board/board_list/code/afterpicture" target="_blank">더보기 &gt;</a>
             </div>
             <div class="delivery-slider-container">
@@ -3448,6 +3463,7 @@
 
         // 배송사진 데이터 (수동 업데이트)
 // 마지막 업데이트: 2026-01-16 15:11
+const deliveryUpdateDate = '2026/01/16 업데이트';
 const deliveryPhotos = [
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUEOgjAQheG7dG-nU5DIcBhScAoITcm0pAvj3RVduHp_3uZzZOmZqFwidcimukRtQ2rOeVwngCVMR2LREhMHt35qjHoVGDhlv8XCAhL6ITq5g_OZZV_GfAiDNbYBg981iFe0pkGsb3V7Qf3Yp9NBS0rYs7D0c0z5_KwhVUrRf-BcJ6ru9QY4GjbD&S=300x300',
@@ -3528,6 +3544,11 @@ const deliveryPhotos = [
 
         // 캐러셀 초기화
         function initDeliverySlider() {
+            // 업데이트 날짜 표시
+            const dateEl = document.getElementById('deliveryUpdateDate');
+            if (dateEl && deliveryUpdateDate) {
+                dateEl.textContent = deliveryUpdateDate;
+            }
             renderDeliverySlider();
         }
 
