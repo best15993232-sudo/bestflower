@@ -971,6 +971,106 @@
             background: #f5d800;
         }
 
+        /* 배송 제한 안내 스타일 */
+        .delivery-restriction-notice {
+            display: none;
+            background: #fff3e0;
+            border: 1px solid #ffb74d;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .delivery-restriction-notice.show {
+            display: block;
+        }
+
+        .delivery-restriction-notice .notice-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .delivery-restriction-notice .notice-title::before {
+            content: "⚠️";
+        }
+
+        .delivery-restriction-notice .alternative-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .delivery-restriction-notice .alt-product-card {
+            flex: 1;
+            min-width: 120px;
+            max-width: calc(50% - 5px);
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .delivery-restriction-notice .alt-product-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .delivery-restriction-notice .alt-product-card .alt-product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .delivery-restriction-notice .alt-product-card .alt-product-price {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .delivery-restriction-notice .alt-product-card .alt-product-desc {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .delivery-restriction-notice .btn-change-product {
+            width: 100%;
+            padding: 8px 12px;
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .delivery-restriction-notice .btn-change-product:hover {
+            background: #f57c00;
+        }
+
+        .delivery-restriction-notice .btn-change-product.selected {
+            background: #4caf50;
+        }
+
+        @media (max-width: 480px) {
+            .delivery-restriction-notice .alt-product-card {
+                min-width: 100px;
+            }
+        }
+
         /* 상호검색 모달 스타일 */
         .place-modal {
             display: none;
@@ -1604,13 +1704,26 @@
 
         .delivery-slider {
             display: flex;
-            transition: transform 0.5s ease;
             gap: 10px;
+            animation: deliveryCarousel 30s linear infinite;
+        }
+
+        .delivery-slider:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes deliveryCarousel {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .delivery-slide {
-            flex: 0 0 calc(25% - 8px);
-            min-width: calc(25% - 8px);
+            flex: 0 0 100px;
+            min-width: 100px;
             text-decoration: none;
             color: inherit;
         }
@@ -1636,8 +1749,8 @@
 
         .delivery-slide .name {
             display: block;
-            margin-top: 8px;
-            font-size: 12px;
+            margin-top: 6px;
+            font-size: 11px;
             color: #666;
             text-align: center;
             white-space: nowrap;
@@ -1652,51 +1765,14 @@
             font-size: 14px;
         }
 
-        /* 배송사진 dots 인디케이터 */
-        .delivery-nav-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .delivery-nav-dots {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .delivery-nav-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .delivery-nav-dot:hover {
-            background: #bbb;
-        }
-
-        .delivery-nav-dot.active {
-            background: #0b5c55;
-        }
-
         @media (max-width: 480px) {
             .delivery-slide {
-                flex: 0 0 calc(33.333% - 7px);
-                min-width: calc(33.333% - 7px);
+                flex: 0 0 85px;
+                min-width: 85px;
             }
 
-            .delivery-nav-dot {
-                width: 6px;
-                height: 6px;
-            }
-
-            .delivery-nav-dots {
-                gap: 4px;
+            .delivery-slide .name {
+                font-size: 10px;
             }
         }
     </style>
@@ -1718,11 +1794,6 @@
             <div class="delivery-slider-container">
                 <div class="delivery-slider" id="deliverySlider">
                     <!-- 배송사진이 여기에 표시됩니다 -->
-                </div>
-            </div>
-            <div class="delivery-nav-buttons">
-                <div class="delivery-nav-dots" id="deliveryDots">
-                    <!-- dots가 여기에 표시됩니다 -->
                 </div>
             </div>
         </div>
@@ -2137,6 +2208,10 @@
                         <input type="text" id="orderDeliveryPlace" placeholder="예: 서울 강남구 삼성동 OO예식장 OO홀">
                         <button type="button" class="btn-place-search" onclick="openPlaceSearchModal()">주소검색</button>
                     </div>
+                    <div class="delivery-restriction-notice" id="deliveryRestrictionNotice">
+                        <div class="notice-title">해당 지역은 아래 상품만 배송 가능합니다.</div>
+                        <div class="alternative-products" id="alternativeProducts"></div>
+                    </div>
                 </div>
 
                 <div class="order-form-group">
@@ -2315,11 +2390,448 @@
             flower: ['flowers', 'bouquet']                             // 꽃선물: 꽃바구니, 꽃다발
         };
 
+        // =====================================================
+        // 배송 제한 대체 상품 데이터
+        // =====================================================
+        const alternativeProducts = {
+            // 축하화환 대체상품
+            congrats_rice: {
+                name: '쌀화환',
+                price: '95,500원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1004_01.png&S=660x660',
+                desc: ''
+            },
+            congrats_rice_ribbon: {
+                name: '쌀화환',
+                dataName: '쌀리본',
+                price: '95,500원',
+                url: 'https://team-0aa767.flow.team/flowImg/FLOW_202601165965351_96b6a168-cbb1-4cd2-b63b-2ee002604152.png',
+                desc: '해당 지역 및 예식장은 해당 형태의 제품만 반입됩니다'
+            },
+            congrats_kimhae_objet: {
+                name: '[김해] 신화환',
+                price: '87,300원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1006_01.png&S=660x660',
+                desc: '100% 생화로 제작된 축하화환'
+            },
+            congrats_kimhae_objet_2: {
+                name: '[김해] 신화환 고급형',
+                price: '114,600원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1007_01.png&S=660x660',
+                desc: '100% 생화로 제작된 2단 축하화환'
+            },
+            congrats_basket: {
+                name: '꽃바구니',
+                price: '54,600원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/BK0001_01.png&S=660x660',
+                desc: ''
+            },
+            // 근조화환 대체상품
+            funeral_objet: {
+                name: '신화환',
+                price: '78,200원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1018_01.png&S=660x660',
+                desc: ''
+            },
+            funeral_objet_2: {
+                name: '신화환 고급형',
+                price: '109,200원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1019_01.png&S=660x660',
+                desc: ''
+            },
+            funeral_rice: {
+                name: '쌀화환',
+                price: '95,500원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1025_01.png&S=660x660',
+                desc: ''
+            },
+            funeral_basket: {
+                name: '근조바구니',
+                price: '63,700원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1020_01.png&S=660x660',
+                desc: ''
+            },
+            funeral_basket_2: {
+                name: '근조바구니 고급형',
+                price: '72,800원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1021_01.png&S=660x660',
+                desc: ''
+            },
+            funeral_basket_3: {
+                name: '근조바구니 최고급형',
+                price: '118,300원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1022_01.png&S=660x660',
+                desc: ''
+            },
+            // 기본형 제외 고급형부터
+            funeral_advanced: {
+                name: '근조화환 고급형',
+                price: '98,200원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WE1002_01.png&S=660x660',
+                desc: '생화 & 포인트 꽃 추가! 고급 3단 화환'
+            },
+            funeral_premium: {
+                name: '근조화환 최고급형',
+                price: '113,700원',
+                url: 'https://www.bestflower.co.kr/IS/U=bestflower/WI1016_01.png&S=660x660',
+                desc: '차별화된 크기, 4단 화환'
+            }
+        };
+
+        // =====================================================
+        // 배송 제한 규칙 데이터
+        // =====================================================
+        const deliveryRestrictions = {
+            // 예식장 - 쌀화환
+            congrats_rice: [
+                '서울 강동 천호동성당', '서울 서초 방배동성당', '서울 서초 서초동교회', '서울 서초 양재온누리교회',
+                '서울 종로 가회동성당', '서울 종로 안동교회', '서울 종로 혜화동성당', '경기 성남 분당성요한성당',
+                '충북 청주 더빈컨벤션웨딩홀', '충북 청주 아모르아트웨딩컨벤션', '경남 창원 리베라컨벤션',
+                '경남 창원 엘시티관광호텔 스카이웨딩홀', '경남 창원 웨딩유로', '경남 창원 창원웨딩의전당',
+                '경남 창원 힐스카이 웨딩&컨벤션', '울산 르엘컨벤션'
+            ],
+            // 예식장 - 쌀리본
+            congrats_rice_ribbon: [
+                '서울 중구 대한성공회 서울교구', '서울 중구 명동성당', '명동대성당', '서울 중구 중림동 약현성당',
+                '서울 중구 프란치스코 교육회관'
+            ],
+            // 예식장 - 리본만 전달 (안내만)
+            congrats_ribbon_only: [
+                '서울 강남 논현2동성당', '서울 강남 더라움', '라움 아트센터', '서울 강남 빌라드지디 강남',
+                '서울 구로 더세인트웨딩', '서울 마포 아펠가모 공덕점', '서울 중구 라루체웨딩홀', '서울 중구 크레스트 72'
+            ],
+            // 예식장 - 꽃바구니
+            congrats_basket: [
+                '서울 강남 빌라드지디 청담', '부산 아시아드시티웨딩컨벤션 마리아주홀', '제주 제주정원'
+            ],
+            // 예식장 - 김해 신화환
+            congrats_kimhae: [
+                '경남 김해 JW웨딩컨벤션센터', '경남 김해 더파티웨딩홀', '경남 김해 메르시앙웨딩홀',
+                '경남 김해 비즈컨벤션', '경남 김해 아이스퀘어호텔웨딩'
+            ],
+            // 장례식장 - 신화환
+            funeral_objet: [
+                '서울 노원 더조은요양병원 장례식장', '경기 수원 수원시연화장 장례식장', '경기 연천',
+                '세종 은하수공원 장례식장', '전북 남원', '전라북도 남원', '전북 부안', '전라북도 부안',
+                '전북 정읍', '전라북도 정읍', '전남 여수', '전라남도 여수',
+                '경북 김천 김천의료원 장례식장', '경북 김천 김천요양병원 장례식장', '김천요양우석병원',
+                '경북 김천 김천제일병원', '경남 거제 거붕백병원', '경남 거제 백병원 대명아임레디 장례식장',
+                '경남 거창', '경상남도 거창', '경남 양산 쉴낙원 양산시민장례식장', '경남 양산 양산농협 양산장례식장',
+                '울산 울산하늘공원 장례식장', '부산 동남권원자력의학원', '부산 동래봉생병원장례식장',
+                '부산 부산영락공원', '부산 부산착한전문장례식장', '부산 쉴낙원 빌리브세웅병원장례식장',
+                '부산 중앙U병원장례식장'
+            ],
+            // 장례식장 - 쌀화환
+            funeral_rice: [
+                '충남 예산 예산중앙장례식장', '충남 예산 청담장례문화원', '전북 완도', '전라북도 완도',
+                '경북 청도', '경상북도 청도', '경남 밀양', '경상남도 밀양'
+            ],
+            // 장례식장 - 근조바구니
+            funeral_basket: [
+                '경북 고령 고령영생병원 장례식장', '경북 고령 고령전문장례식장', '경북 고령 고령대가야장례식장',
+                '경북 상주 상주시민장례식장', '경남 사천 사천시 공설장례식장', '경남 사천 사천시누리원',
+                '경남 산청', '경상남도 산청', '경남 창녕 창녕군공설장례식장', '경남 창녕 창녕서울병원 전문장례식장',
+                '경남 창원 마산의료원 장례식장', '경남 창원 창원시립상복공원 장례식장', '경남 함안 함안하늘공원 장례식장',
+                '대구 대구가톨릭대학교병원 장례식장'
+            ],
+            // 예외: 정읍 신태인장례식장, 밀양 밀양농협 -> 근조3단 가능
+            funeral_exception: [
+                '신태인장례식장', '밀양농협'
+            ],
+            // 고급형부터만 가능한 지역
+            funeral_advanced_only: [
+                '경기 양평 양서농협', '양서농협',
+                '강원 철원', '강원도 철원', '강원 화천', '강원도 화천', '강원 양구', '강원도 양구',
+                '강원 고성', '강원도 고성', '강원 인제', '강원도 인제', '강원 동해', '강원도 동해',
+                '강원 평창', '강원도 평창', '강원 횡성', '강원도 횡성', '강원 태백', '강원도 태백',
+                '강원 삼척', '강원도 삼척',
+                '전북 진안', '전라북도 진안', '전북 임실', '전라북도 임실', '전북 장수', '전라북도 장수',
+                '전남 곡성', '전라남도 곡성',
+                '경북 울진', '경상북도 울진', '경북 문경', '경상북도 문경', '경북 영양', '경상북도 영양',
+                '경북 의성', '경상북도 의성', '경북 청송', '경상북도 청송', '경북 영덕', '경상북도 영덕',
+                '경남 창녕', '경상남도 창녕', '경남 의령', '경상남도 의령'
+            ]
+        };
+
         // 현재 선택된 상품 정보
         let currentCategory = '';
         let currentGradeInModal = '고급';
         let currentMainCategory = 'wreath';
         let selectedProductKey = '';  // 선택된 상품 키 (예: 'funeral_고급')
+
+        // 현재 배송 제한 상태
+        let currentDeliveryRestriction = null;
+
+        // =====================================================
+        // 배달장소 입력 감지 및 배송 제한 체크
+        // =====================================================
+        function checkDeliveryRestriction(address) {
+            const noticeEl = document.getElementById('deliveryRestrictionNotice');
+            const productsEl = document.getElementById('alternativeProducts');
+            const noticeTitleEl = noticeEl.querySelector('.notice-title');
+
+            if (!address || address.trim() === '') {
+                noticeEl.classList.remove('show');
+                currentDeliveryRestriction = null;
+                return;
+            }
+
+            const addr = address.trim();
+            let restriction = null;
+            let products = [];
+            let noticeText = '해당 지역은 아래 상품만 배송 가능합니다.';
+
+            // 현재 메인 카테고리가 화환인지 확인
+            if (currentMainCategory !== 'wreath') {
+                noticeEl.classList.remove('show');
+                currentDeliveryRestriction = null;
+                return;
+            }
+
+            // 현재 선택된 상품이 축하화환인지 근조화환인지 확인
+            const isCongratsSelected = selectedProductKey.startsWith('congrats');
+            const isFuneralSelected = selectedProductKey.startsWith('funeral');
+
+            // 예외 처리: 신태인장례식장, 밀양농협은 일반 화환 가능
+            for (const exception of deliveryRestrictions.funeral_exception) {
+                if (addr.includes(exception)) {
+                    noticeEl.classList.remove('show');
+                    currentDeliveryRestriction = null;
+                    return;
+                }
+            }
+
+            // 축하화환 제한 체크 (축하화환 선택 시 또는 아무것도 선택 안 했을 때)
+            if (isCongratsSelected || (!isFuneralSelected && !isCongratsSelected)) {
+                // 리본만 전달 (안내만 표시)
+                for (const place of deliveryRestrictions.congrats_ribbon_only) {
+                    if (addr.includes(place)) {
+                        restriction = 'congrats_ribbon_only';
+                        noticeText = '해당 예식장은 화환 반입 후 리본만 전달됩니다. 일반 축하화환으로 주문 가능합니다.';
+                        products = [];
+                        break;
+                    }
+                }
+                // 김해 신화환
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.congrats_kimhae) {
+                        if (addr.includes(place) || (addr.includes('김해') && addr.includes('웨딩'))) {
+                            restriction = 'congrats_kimhae';
+                            products = [
+                                alternativeProducts.congrats_kimhae_objet,
+                                alternativeProducts.congrats_kimhae_objet_2
+                            ];
+                            break;
+                        }
+                    }
+                }
+                // 쌀화환
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.congrats_rice) {
+                        if (addr.includes(place)) {
+                            restriction = 'congrats_rice';
+                            products = [alternativeProducts.congrats_rice];
+                            break;
+                        }
+                    }
+                }
+                // 쌀리본
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.congrats_rice_ribbon) {
+                        if (addr.includes(place)) {
+                            restriction = 'congrats_rice_ribbon';
+                            products = [alternativeProducts.congrats_rice_ribbon];
+                            break;
+                        }
+                    }
+                }
+                // 꽃바구니
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.congrats_basket) {
+                        if (addr.includes(place)) {
+                            restriction = 'congrats_basket';
+                            products = [alternativeProducts.congrats_basket];
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // 근조화환 제한 체크 (근조화환 선택 시)
+            if (isFuneralSelected) {
+                // 신화환
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.funeral_objet) {
+                        if (addr.includes(place)) {
+                            restriction = 'funeral_objet';
+                            products = [
+                                alternativeProducts.funeral_objet,
+                                alternativeProducts.funeral_objet_2
+                            ];
+                            break;
+                        }
+                    }
+                }
+                // 쌀화환
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.funeral_rice) {
+                        if (addr.includes(place)) {
+                            restriction = 'funeral_rice';
+                            products = [alternativeProducts.funeral_rice];
+                            break;
+                        }
+                    }
+                }
+                // 근조바구니
+                if (!restriction) {
+                    for (const place of deliveryRestrictions.funeral_basket) {
+                        if (addr.includes(place)) {
+                            restriction = 'funeral_basket';
+                            products = [
+                                alternativeProducts.funeral_basket,
+                                alternativeProducts.funeral_basket_2,
+                                alternativeProducts.funeral_basket_3
+                            ];
+                            break;
+                        }
+                    }
+                }
+                // 고급형부터만 가능 (기본형 선택 시에만 안내)
+                if (!restriction) {
+                    const isBasicSelected = selectedProductKey === 'funeral_기본';
+                    if (isBasicSelected) {
+                        for (const place of deliveryRestrictions.funeral_advanced_only) {
+                            if (addr.includes(place)) {
+                                restriction = 'funeral_advanced_only';
+                                products = [
+                                    alternativeProducts.funeral_advanced,
+                                    alternativeProducts.funeral_premium
+                                ];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 제한이 있으면 표시
+            if (restriction) {
+                currentDeliveryRestriction = restriction;
+                noticeTitleEl.textContent = noticeText;
+
+                if (products.length > 0) {
+                    renderAlternativeProducts(products);
+                } else {
+                    productsEl.innerHTML = '';
+                }
+                noticeEl.classList.add('show');
+            } else {
+                noticeEl.classList.remove('show');
+                currentDeliveryRestriction = null;
+            }
+        }
+
+        // =====================================================
+        // 대체 상품 카드 렌더링
+        // =====================================================
+        function renderAlternativeProducts(products) {
+            const container = document.getElementById('alternativeProducts');
+            container.innerHTML = products.map((product, index) => `
+                <div class="alt-product-card">
+                    <img src="${product.url}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                    <div class="alt-product-name">${product.name}</div>
+                    <div class="alt-product-price">${product.price}</div>
+                    ${product.desc ? `<div class="alt-product-desc">${product.desc}</div>` : ''}
+                    <button class="btn-change-product" onclick="selectAlternativeProduct(${index})">변경하기</button>
+                </div>
+            `).join('');
+        }
+
+        // =====================================================
+        // 대체 상품 선택
+        // =====================================================
+        function selectAlternativeProduct(index) {
+            const restriction = currentDeliveryRestriction;
+            if (!restriction) return;
+
+            let products = [];
+            let productKey = '';
+            let grade = '';
+
+            // 제한 유형에 따라 상품 정보 설정
+            switch (restriction) {
+                case 'congrats_kimhae':
+                    products = [alternativeProducts.congrats_kimhae_objet, alternativeProducts.congrats_kimhae_objet_2];
+                    productKey = 'congrats';
+                    grade = index === 0 ? '[김해] 신화환' : '[김해] 신화환 고급형';
+                    break;
+                case 'congrats_rice':
+                    products = [alternativeProducts.congrats_rice];
+                    productKey = 'congrats';
+                    grade = '쌀화환';
+                    break;
+                case 'congrats_rice_ribbon':
+                    products = [alternativeProducts.congrats_rice_ribbon];
+                    productKey = 'congrats';
+                    grade = '쌀리본';
+                    break;
+                case 'congrats_basket':
+                    products = [alternativeProducts.congrats_basket];
+                    productKey = 'flowers';
+                    grade = '기본';
+                    break;
+                case 'funeral_objet':
+                    products = [alternativeProducts.funeral_objet, alternativeProducts.funeral_objet_2];
+                    productKey = 'funeral';
+                    grade = index === 0 ? '신화환' : '신화환 고급형';
+                    break;
+                case 'funeral_rice':
+                    products = [alternativeProducts.funeral_rice];
+                    productKey = 'funeral';
+                    grade = '쌀화환';
+                    break;
+                case 'funeral_basket':
+                    products = [alternativeProducts.funeral_basket, alternativeProducts.funeral_basket_2, alternativeProducts.funeral_basket_3];
+                    productKey = 'funeral';
+                    grade = index === 0 ? '근조바구니' : (index === 1 ? '근조바구니 고급형' : '근조바구니 최고급형');
+                    break;
+                case 'funeral_advanced_only':
+                    products = [alternativeProducts.funeral_advanced, alternativeProducts.funeral_premium];
+                    productKey = 'funeral';
+                    grade = index === 0 ? '고급' : '최고급';
+                    // 기존 상품 선택 방식 사용
+                    selectProduct('funeral', grade);
+                    // 버튼 상태 업데이트
+                    document.querySelectorAll('.btn-change-product').forEach((btn, i) => {
+                        btn.classList.toggle('selected', i === index);
+                        btn.textContent = i === index ? '선택됨' : '변경하기';
+                    });
+                    showToast(`${grade} 상품이 선택되었습니다`);
+                    return;
+            }
+
+            // 선택된 상품 정보 저장
+            const selectedProduct = products[index];
+            selectedProductKey = `${productKey}_${grade}`;
+            currentCategory = productKey;
+            currentGradeInModal = grade;
+
+            // hidden 필드 업데이트
+            document.getElementById('selectedCategory').value = productKey;
+            document.getElementById('selectedGrade').value = grade;
+            document.getElementById('selectedProductKey').value = selectedProductKey;
+
+            // 버튼 상태 업데이트
+            document.querySelectorAll('.btn-change-product').forEach((btn, i) => {
+                btn.classList.toggle('selected', i === index);
+                btn.textContent = i === index ? '선택됨' : '변경하기';
+            });
+
+            // 주문서 미리보기 업데이트
+            updateOrderPreview();
+
+            showToast(`${selectedProduct.name} 상품이 선택되었습니다`);
+        }
 
         // 슬라이더 상태 저장 (상품분류별 현재 위치)
         const sliderPositions = {};
@@ -2349,6 +2861,19 @@
 
             // 주문서 미리보기 업데이트
             updateOrderPreview();
+
+            // 배송 제한 재체크 (카테고리 변경 시)
+            const deliveryPlace = document.getElementById('orderDeliveryPlace');
+            if (deliveryPlace && deliveryPlace.value) {
+                checkDeliveryRestriction(deliveryPlace.value);
+            } else {
+                // 화환이 아닌 카테고리로 전환 시 안내 숨기기
+                const noticeEl = document.getElementById('deliveryRestrictionNotice');
+                if (noticeEl) {
+                    noticeEl.classList.remove('show');
+                    currentDeliveryRestriction = null;
+                }
+            }
         }
 
         // =====================================================
@@ -2536,6 +3061,12 @@
 
             // 주문서 미리보기 업데이트
             updateOrderPreview();
+
+            // 배송 제한 재체크 (상품 변경 시)
+            const deliveryPlace = document.getElementById('orderDeliveryPlace');
+            if (deliveryPlace && deliveryPlace.value) {
+                checkDeliveryRestriction(deliveryPlace.value);
+            }
         }
 
         // 페이지 로드 시 저장된 보내는 분 문구 불러오기
@@ -2558,6 +3089,14 @@
                     field.addEventListener('input', updateOrderPreview);
                 }
             });
+
+            // 배달장소 입력 시 배송 제한 체크
+            const deliveryPlaceField = document.getElementById('orderDeliveryPlace');
+            if (deliveryPlaceField) {
+                deliveryPlaceField.addEventListener('input', function() {
+                    checkDeliveryRestriction(this.value);
+                });
+            }
 
             // 초기 상품 그리드 렌더링 (화환 카테고리)
             renderProductGrid('wreath');
@@ -2923,11 +3462,8 @@
         });
 
         // =====================================================
-        // 배송사진 슬라이더 (수동 데이터 + 자동 슬라이드)
+        // 배송사진 캐러셀 (무한 스크롤 애니메이션)
         // =====================================================
-        let deliverySlidePosition = 0;
-        let deliveryAutoSlideInterval = null;
-        const DELIVERY_AUTO_SLIDE_DELAY = 3000; // 3초마다 자동 슬라이드
 
         // 배송사진 데이터 (수동 업데이트)
 // 마지막 업데이트: 2026-01-16 15:11
@@ -3009,14 +3545,12 @@ const deliveryPhotos = [
     }
 ];
 
-        // 슬라이더 초기화
+        // 캐러셀 초기화
         function initDeliverySlider() {
             renderDeliverySlider();
-            renderDeliveryDots();
-            startDeliveryAutoSlide();
         }
 
-        // 슬라이더 렌더링
+        // 캐러셀 렌더링 (무한 스크롤을 위해 사진 복제)
         function renderDeliverySlider() {
             const slider = document.getElementById('deliverySlider');
 
@@ -3025,109 +3559,21 @@ const deliveryPhotos = [
                 return;
             }
 
-            slider.innerHTML = deliveryPhotos.map(photo => `
+            // 무한 스크롤을 위해 사진을 2번 반복
+            const duplicatedPhotos = [...deliveryPhotos, ...deliveryPhotos];
+
+            slider.innerHTML = duplicatedPhotos.map(photo => `
                 <a class="delivery-slide" href="${photo.href}" target="_blank">
                     <div class="photo">
-                        <img src="${photo.imgSrc}" alt="${photo.name}" loading="lazy">
+                        <img src="${photo.imgSrc}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer">
                     </div>
                     <span class="name">${photo.name}</span>
                 </a>
             `).join('');
-
-            deliverySlidePosition = 0;
-            updateDeliverySlider();
         }
 
-        // Dots 인디케이터 렌더링
-        function renderDeliveryDots() {
-            const dotsContainer = document.getElementById('deliveryDots');
-            const visibleCount = window.innerWidth <= 480 ? 3 : 4;
-            const totalPages = Math.ceil(deliveryPhotos.length / visibleCount);
-
-            dotsContainer.innerHTML = Array.from({length: totalPages}, (_, i) =>
-                `<div class="delivery-nav-dot ${i === 0 ? 'active' : ''}" data-page="${i}" onclick="goToDeliveryPage(${i})"></div>`
-            ).join('');
-        }
-
-        // 특정 페이지로 이동
-        function goToDeliveryPage(pageIndex) {
-            const visibleCount = window.innerWidth <= 480 ? 3 : 4;
-            deliverySlidePosition = pageIndex * visibleCount;
-
-            // 최대 위치 제한
-            const maxPosition = Math.max(0, deliveryPhotos.length - visibleCount);
-            deliverySlidePosition = Math.min(deliverySlidePosition, maxPosition);
-
-            updateDeliverySlider();
-            updateDeliveryDots();
-            resetDeliveryAutoSlide();
-        }
-
-        // 슬라이더 위치 업데이트
-        function updateDeliverySlider() {
-            const slider = document.getElementById('deliverySlider');
-            const slide = slider.querySelector('.delivery-slide');
-            if (!slide) return;
-
-            const slideWidth = slide.offsetWidth;
-            const gap = 10;
-
-            slider.style.transform = `translateX(-${deliverySlidePosition * (slideWidth + gap)}px)`;
-        }
-
-        // Dots 활성화 상태 업데이트
-        function updateDeliveryDots() {
-            const visibleCount = window.innerWidth <= 480 ? 3 : 4;
-            const currentPage = Math.floor(deliverySlidePosition / visibleCount);
-            const dots = document.querySelectorAll('.delivery-nav-dot');
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentPage);
-            });
-        }
-
-        // 자동 슬라이드 시작
-        function startDeliveryAutoSlide() {
-            stopDeliveryAutoSlide();
-            deliveryAutoSlideInterval = setInterval(() => {
-                const visibleCount = window.innerWidth <= 480 ? 3 : 4;
-                const maxPosition = Math.max(0, deliveryPhotos.length - visibleCount);
-
-                deliverySlidePosition += visibleCount;
-                if (deliverySlidePosition > maxPosition) {
-                    deliverySlidePosition = 0;
-                }
-
-                updateDeliverySlider();
-                updateDeliveryDots();
-            }, DELIVERY_AUTO_SLIDE_DELAY);
-        }
-
-        // 자동 슬라이드 중지
-        function stopDeliveryAutoSlide() {
-            if (deliveryAutoSlideInterval) {
-                clearInterval(deliveryAutoSlideInterval);
-                deliveryAutoSlideInterval = null;
-            }
-        }
-
-        // 자동 슬라이드 리셋 (사용자 조작 후 재시작)
-        function resetDeliveryAutoSlide() {
-            stopDeliveryAutoSlide();
-            startDeliveryAutoSlide();
-        }
-
-        // 페이지 로드 시 슬라이더 초기화
+        // 페이지 로드 시 캐러셀 초기화
         document.addEventListener('DOMContentLoaded', initDeliverySlider);
-
-        // 화면 크기 변경 시 슬라이더 업데이트
-        window.addEventListener('resize', function() {
-            if (deliveryPhotos.length > 0) {
-                renderDeliveryDots();
-                updateDeliverySlider();
-                updateDeliveryDots();
-            }
-        });
 
         // 카카오맵 장소 검색 (JavaScript SDK)
         const ps = new kakao.maps.services.Places();
@@ -3262,6 +3708,7 @@ const deliveryPhotos = [
             document.getElementById('orderDeliveryPlace').value = fullAddress;
             closePlaceSearchModal();
             updateOrderPreview();
+            checkDeliveryRestriction(fullAddress);
             showToast('배달장소가 입력되었습니다');
         }
 
