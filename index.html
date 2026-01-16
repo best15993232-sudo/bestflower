@@ -878,6 +878,7 @@
         .order-notice .time-info {
             font-size: 13px;
             color: #333;
+            margin-bottom: 10px;
         }
 
         @media (max-width: 480px) {
@@ -2023,7 +2024,7 @@
                 </div>
 
                 <div class="order-notice" style="margin-top: 12px;">
-                    <p class="time-info" style="margin: 0 10px;">카톡주문 가능시간 | 평일 09:00~18:00</p>
+                    <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
                     <p class="time-info" style="display: flex; justify-content: center; align-items: center;">
                         <span>무통장입금</span>
                         <span style="margin: 0 8px;">|</span>
@@ -2317,6 +2318,42 @@
                 });
             }
         }
+
+        // =====================================================
+        // 슬라이더 스와이프 제스처 (모바일)
+        // =====================================================
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let currentSwipeSlider = null;
+
+        document.addEventListener('touchstart', function(e) {
+            const slider = e.target.closest('.product-slider-wrapper');
+            if (slider) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                currentSwipeSlider = slider.closest('.product-group');
+            }
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            if (!currentSwipeSlider) return;
+
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+
+            // 수평 스와이프가 수직보다 클 때만 처리 (스크롤과 구분)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                const productKey = currentSwipeSlider.dataset.productKey;
+                if (productKey) {
+                    const direction = diffX > 0 ? 1 : -1; // 왼쪽 스와이프 = 다음, 오른쪽 = 이전
+                    slideProducts(productKey, direction);
+                }
+            }
+
+            currentSwipeSlider = null;
+        }, { passive: true });
 
         // =====================================================
         // 상품 선택 함수
