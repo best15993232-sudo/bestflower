@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
-    <title>전국 화환·화분·꽃 3시간 퀵배송</title>
-
-    <!-- Open Graph 메타 태그 (링크 공유시 미리보기) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="전국 화환·화분·꽃 3시간 퀵배송">
-    <meta property="og:description" content="베스트플라워 - 근조화환, 축하화환, 개업화분, 꽃바구니 전문">
-    <meta property="og:image" content="https://team-0aa767.flow.team/flowImg/FLOW_202601143912450_bb6ad82b-564a-42b7-80bd-450e54727cf4.png">
-
-    <!-- 트위터 카드 -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="전국 화환·화분·꽃 3시간 퀵배송">
-    <meta name="twitter:description" content="베스트플라워 - 근조화환, 축하화환, 개업화분, 꽃바구니 전문">
-    <meta name="twitter:image" content="https://team-0aa767.flow.team/flowImg/FLOW_202601143912450_bb6ad82b-564a-42b7-80bd-450e54727cf4.png">
-
+    <title>전국 화환·화분·꽃 3시간 퀵배송</title>   
     <style>
         @font-face {
             font-family: 'JoseonPalace';
@@ -1796,7 +1783,7 @@
         }
     </style>
     <!-- 카카오맵 SDK -->
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a2757bfe21447887d8528345d95588d&libraries=services&autoload=false"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2a2757bfe21447887d8528345d95588d&libraries=services"></script>
 </head>
 <body>
     <div class="container">
@@ -3591,29 +3578,14 @@ const deliveryPhotos = [
         document.addEventListener('DOMContentLoaded', initDeliverySlider);
 
         // 카카오맵 장소 검색 (JavaScript SDK)
-        let ps = null;
-        let kakaoLoaded = false;
+        const ps = new kakao.maps.services.Places();
         let currentPage = 1;
         let currentKeyword = '';
         let totalPages = 1;
         let currentPagination = null;
 
-        // 카카오맵 SDK 로드
-        if (typeof kakao !== 'undefined' && kakao.maps) {
-            kakao.maps.load(function() {
-                kakaoLoaded = true;
-                ps = new kakao.maps.services.Places();
-            });
-        }
-
-        // 카카오맵 SDK 초기화 확인
-        function initKakaoPlaces() {
-            return ps;
-        }
-
         // 모달 열기
         function openPlaceSearchModal() {
-            initKakaoPlaces();
             document.getElementById('placeSearchModal').classList.add('show');
             document.getElementById('placeKeyword').focus();
         }
@@ -3633,12 +3605,6 @@ const deliveryPhotos = [
 
             if (!keyword) {
                 showToast('검색어를 입력해주세요');
-                return;
-            }
-
-            // SDK 초기화 확인
-            if (!initKakaoPlaces()) {
-                showToast('카카오맵 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
                 return;
             }
 
