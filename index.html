@@ -65,6 +65,14 @@
             color: #666;
         }
 
+        .header .header-tagline {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
         /* 푸터 스타일 */
         .footer {
             margin-top: 30px;
@@ -1818,6 +1826,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <span class="header-tagline">전국 3시간 배송</span>
             <img src="https://team-0aa767.flow.team/flowImg/FLOW_202601143912450_bb6ad82b-564a-42b7-80bd-450e54727cf4.png" alt="베스트플라워" class="logo">
         </div>
 
@@ -1839,18 +1848,18 @@
 
         <!-- 메인 탭 버튼 -->
         <div class="main-tabs">
-            <button class="main-tab-btn phrases active" onclick="showMainTab('phrases')">
+            <button class="main-tab-btn phrases" onclick="showMainTab('phrases')">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 리본문구
             </button>
-            <button class="main-tab-btn order" onclick="showMainTab('order')">
+            <button class="main-tab-btn order active" onclick="showMainTab('order')">
                 <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.58 2 11c0 2.84 1.88 5.33 4.7 6.77L5.6 21l4.08-2.41c.76.11 1.53.16 2.32.16 5.5 0 10-3.58 10-8s-4.5-8-10-8z"/></svg>
                 주문하기
             </button>
         </div>
 
         <!-- 리본문구 보기 탭 콘텐츠 -->
-        <div id="phrasesTab" class="main-tab-content active">
+        <div id="phrasesTab" class="main-tab-content">
             <!-- 보내는 분 문구 섹션 -->
             <div class="sender-section">
                 <label class="sender-label">리본문구 보내는분</label>
@@ -2181,7 +2190,7 @@
         </div><!-- phrasesTab -->
 
         <!-- 주문하기 탭 콘텐츠 -->
-        <div id="orderTab" class="main-tab-content">
+        <div id="orderTab" class="main-tab-content active">
             <!-- 문구 선택 안내 -->
             <div class="go-to-phrases">
                 <p>경조사어/보내는분 문구를 선택하려면</p>
