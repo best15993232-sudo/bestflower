@@ -1626,6 +1626,44 @@
             word-break: keep-all;
         }
 
+        /* 전화문의 플로팅 버튼 */
+        .phone-float-btn {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 9999;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .phone-float-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .phone-float-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: #ffffff;
+        }
+
+        .phone-float-btn span {
+            font-size: 8px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
         /* 카톡 문의 플로팅 버튼 */
         .kakao-float-btn {
             position: fixed;
@@ -3518,83 +3556,83 @@
         // =====================================================
 
 // 배송사진 데이터 (수동 업데이트)
-// 마지막 업데이트: 2026-02-02 08:57
-const deliveryUpdateDate = '2026/02/02 업데이트';
+// 마지막 업데이트: 2026-01-21 17:33
+const deliveryUpdateDate = '2026/01/21 업데이트';
 const deliveryPhotos = [
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjUEOgyAQRe_CvgygtXU8jEE7qFUDGSAsTO_e2i66ej9v8Z9Fg0fECkXmTXQR2xrFnFJAgGWfciSW7CPtdv2s0cuVYaCY3OYLMfDeD97yA6xLxGEZU2YCo0wDSn-pdKXa5m5u11pdtHyG6axog4LJERP3s4_pdEahKKXI__2vXCe61xvbWTZj&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/966',
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUEOgjAQheG7dG-nUwXtcBhScAoIpGRa0oXx7oouXFy9P2_zebL0THQmtcuimkSuJjXmvBHAtA57YtESE69-_lQf9SzQccphiYUFZG276OUOPmSWberzLgzW2BoMftegRbxgVbkbuusJ9WMbDgctKeHAwtKOMeXjs4ZUKUX_gZ-omtcbOsM2zg..&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/930',
         name: '고객'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV-GizVhfBiDdrxUCWaAsDB999Z20dX5czafR4NnQoui8C66hK5FseR8IMAa5pKIJcdEwW-fGqPcGAZKedpjJQYO_RA9P8BPmfhYx1xcmMAo04LS31XaKt2axjp3t81Ny-cxX442KJgmYuJ-iSlfn1Eoaq3yD_xE0b3eOeg2yg..&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/965',
-        name: '이보* 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzc0OwiAQBOB34S4LWyVx-zANrdsfW0KzQDgY391WDx4mM5nL5wnplaghVWRTbaK7IzXnvBPAEqaSWLTExMGvxxqiXgV6TnncYmUBCV0fvTzAj5llX4ZcXIQBDTow9tvGorXmhuZ6xF2sfu7T6VgkJTyysHRzTPn80JCqteo_8BNV-_5cMDTGNrU.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/929',
+        name: '테크*론티어 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzTsOgzAQRdG9uI_HHhCQYTHIkOETQEZjWy5Q9p6QFKne1WuOI6QzUEEqyabaQPeK1BzjQVwwyz6lwKLFB97d-qnB61Wg5xDHzWcWkL3rvZMHuDGyHMsQkzCgwQqM_a6xiLYusKzLsmluVj-P6XIskhIeWVi62Yd4fWhI5Zz1H_iJqn29ATqTNs0.&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/964',
-        name: '김형* 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OOxQvw8OQglNAICXTki6M767owtX5czafXCekZ6KK1C6LahLdLqTGnDcCmNZhTyxaYuLVz5_qo54FOk45LLGwgKxtF73cwYfMsk193oUBDZ7B2O8ai8bWztXWXQ2erH5sPByQRVLCgYWlHWPKx4eGVClF_4UfqZrXG3FXNyM.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/928',
+        name: '상주*김*문 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WMNq4foxBu6hVAlkgHJr-e6s99DCZyVxcnkWDr4QNisKHGBL2HYo154hcMJtfSlwilhwSebt_1xzkzjBRyu4IlRjYj1Ow_Fww6zJx3OZcXJjAKNOB0lcrbXp9b6607U3LZ1xcTkcbFEyOmHhcXEPK52cUilqr_AM_UQzvDz0CNtY.&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/963',
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjcEOwiAQRP-FuyygNbr9mIbWpa0tgSwQDsZ_l-rBy7zJHOZZNPhKeEZReBd9wvsFxZJzRIDVzyURSw6JvN1am4LcGEZK2e2hEgP7YQyWH2BdJo7rlAsTGGWuoPSXSre8dV2DOmn5jPNh0QYFkyMmHpaQ8rEZhaLWKv_3P5_o3x_WvjZQ&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/927',
+        name: '정현* 님'
+    },
+    {
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OO2gjw8OQgsNFaEqmJV0Q313Rhavz52w-T0hHoorULqtqEtWO1JTzRlwwcxj3xKIlJg5--VQf9Vwi0HHKwxoLC0hou-jlAX7ILNvc510Y0KADY79rLBp7q6or3mvjLlY_t_F0LJISHlhY2immfH5oSJVS9B_4iap5vQE4ZTbE&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/926',
+        name: '신명* 님'
+    },
+    {
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OZwg1Dg9DCg4XgZRMS7owvruiC1fnz9l8gYmfiSs2h66mSXzzbKacdwaYt_FIolZjki0sn-qjXRQ6SXlYYxEF3douBr1DGLLoPvf5UAFy5MHhdx2SwxqvtceK_AXtYx9PB4mNyiAq2k4x5fMjx6aUYv_ATzTN6w03fTbA&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/925',
         name: '고객'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOwiAQheF3YS_DJYJOH6ahdXqxbWgGCIvGd9fqwtX5czZfQINHQoui8CqahHeHYsp5R4B5G0tcIpYcE21h-VQf5cLQUcrDGisx8NZ2MfADwpCJ97nPhQmMMg6U_q7SVml_dVZ5628XLZ_7eDraoGAaiInbKaZ8fkahqLXKP_ATRfN6AzohNss.&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/962',
-        name: '김수*(신부) 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUEOgyAQheG7sC8zYNR0PIxBO6hVghkwLEzv3touunp_3uZzZOlMVJE6ZFNdontDas55XCeAJUxHYtESEwe3fmqMehUYOGW_xcICEvohOnmA85llX8Z8CINF21wwmu-isWgqrLE1bd3ejH7u0-UYS0rYs7D0c0z5-iySKqXoP_ATVfd6AzcWNr8.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/924',
+        name: '김예* 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OO0WIw8OQgsNFICXTNl0Y313Rhavz52w-T0jPSI5Ulk21kW41qTmlg1wwln3KkUVLiLz79VND0KtAzzGNWygsIHvXBy938GNiOZYhZWFAgzUY-11jnbWuqgw2zRUvVj-O6XQskhIeWVi6OcR0fmhIlVL0H_iJqn29ATd5NsA.&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/961',
-        name: '박재* 님'
-    },
-    {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV8GsJUyPoxBO16qBjJgWJi-e2u76Or8OZvPo8EjYYVi51U0CV2NYso5XCLAvI17XCKWHBJtfvlUH-TC0FHKwxoKMfDWdsHzA_yQiePc550JjDI1KP1dpSut3M1cXK2z9n7R8hnH09EGBdNATNxOIeXzMwpFKUX-gZ8omtcbPQE21w..&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/960',
-        name: '손건* 님'
-    },
-    {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OO1RcIsPDkILDRSAl0zZdGN9d0YWr8-dsPk9Iz0gVqSybaiM1Nak5pYNcMJZ9ypFFS4i8-_VTQ9CrQM8xjVsoLCB71wcvd_BjYjmWIWVhQIM1GPtdY7GxV4Pu5tBVF6sfx3Q6FkkJjyws3RxiOj80pEop-g_8RNW-3jjgNsU.&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/959',
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d7OdBCiw8OQgsNFICXTki6I767owtX5czafZ-IjcsFm18XUke8VmzGljQGmddijqNUQZfXzp7pgZ4VWYuqXkEVB16YNXh_g-yS6TV3aVYCQKkD3XXSESOW1xFtVFhdnn9twOo7YqPSios0YYjo_QjY5Z_sHfqKpX283pjbB&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/923',
         name: '고객'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOwiAQheF3YS8DY23C9GEaWqcXW0IzQFgY312rC1fnz9l8npCeia6kiuyqS-RaUkvOBwGsYS6JRUtMHPz2qTHqTWDglKc9VhaQ0A_Ryx38lFmOdcxFGNBgC8Z-11h0tmkM3mzjzMXqxzGfjkVSwhMLS7_ElM8PDalaq_4DP1F1rzc4JDbC&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/958',
-        name: '신랑*박근형님 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV8GRoLp-DAG7XipGsyAYWH67q3toqvz52y-QEhnoorUIatqEt09qSnnnVww5m08EouWmHgLy6f6qBeBjlMe1lhYQLa2i0EeEIbMss99PoQBDXow9rvGWo_onKu9q6ub1c99vByLpIQHFpZ2iilfHxpSpRT9B36ial5vOjU2yw..&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/922',
+        name: '이창*소장님 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzc0OwiAQBOB34S7LT6xx-zANrUtbWwJZIByM726rB5NJZjKXz6HBV0aLovIu-oz3DsVSSkKANcw1E0uOmYLbjjVFuTGMlIvfYyMGDsMYHT_A-UKc1qlUJjDKdKD0t5W2R7S2xl5v6qLlM82now0KJk9MPCwxl_MzCkVrTf6Bnyj69wc1BTa2&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/957',
-        name: '오철* 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUEOgyAQheG7sC_DYGrieBiDdlCrBDNAWJjevbVddPX-vM3nyNKZqCFVZFd9oq4lteR8EMAa5pJYtMTEwW2fmqLeBEZO2e-xsoCEYYxOHuB8ZjnWKRdhsMa2YPC7BrFD09wRGzTtDfXzmC8HLSlhz8IyLDHl67OGVK1V_4GfqPrXGzWuNrg.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/921',
+        name: '원용*님 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV8Gxijp-DAG7XipEsyAYWH67q3toqvz52w-T0hnoorUIZtqE90bUnPOOwEsYToSi5aYOPj1U0PUq0DPKY9bLCwgoeujlwf4MbPsy5APYUCDDRj7XWPR2bqqjUFXuZvVz326HIukhEcWlm6OKV8fGlKlFP0HfqJqX284TjbD&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/956',
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzTsOgzAQRdG9uI_HYwsCw2KQIcNcJ4CMxkYuUPaekBSp3tVrjlwnS2ckR-qQVTWR6pLUlNJOXDDzNh6RRUuIvPnlU33Qi0DHMQ1ryCwgW9sFLw_wQ2LZ5z4dwmCNLcHgdw3iHeuiMs4VWN1QP_fxctCSEh5YWNopxHR91pDKOes_8BNV83oDOpY2zA..&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/920',
+        name: '박지* 님'
+    },
+    {
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d5OO5hcIsPDkILDRSAl0zZdGN9d0YWr8-dsPk9Iz0gVqSybaiM1jtSc0kFcMMs-5ciiJUTe_fqpIehVoOeYxi0UFpC964OXO_gxsRzLkLIwoEEHxn7XWOusu96wbmp0F6sfx3Q6FkkJjyws3RxiOj80pEop-g_8RNW-3jxuNtQ.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/919',
         name: '고객'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WMNp2_RiDdlGrBLJAODT992p76FxcZjKXZ9HgK2GDovAu-oT3DsWSc0SA1c8lEUsOibzdjjUFuTGMlLLbQyUG9sMYLD_Aukwc1ykXJjDKdKD0t5U2V902uj1yUxctn3E-HW1QMDli4mEJKZ-fUShqrfIP_ETRvz85jzbI&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/955',
-        name: '고객'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV-GwUri-DAG7XipGsxcMGFh-u6t7aKr8-dsPk-WzkgVqSybaiM1jtSc0kFcMMs-5ciiJUTe_fqpIehVoOeYxi0UFpC964OXB_gxsRzLkLIwWGMdGPyuQXTo7g4bW9X1DfXzmC4HLSnhkYWlm0NM12cNqVKK_gM_UbWvNzoHNso.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/918',
+        name: '이수*(신부) 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjUEOgjAQRe_SvZ1OQY3DYUjBKSA0JdM2XRjvrujC1ft5i_8cWXomakgV2VSX6NaSmnPeCWAJU0ksWmLi4NbPGqNeBQZO2W-xsoCEfohO7uB8ZtmXMRdhsMZewOCXBhuDrb2eEc0J9WOfjgpaUsKehaWfY8qHs4ZUrVX_73891b3e1nI2Tw..&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/954',
-        name: '고객'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgyAQheF3YV8G8NIwPoxBO16qBDNAWJi-e2u76Or8OZvPocEzYoVcIvMuuoi2RbGkdCDA6ucciSWHSN5tnxqD3BgGimnaQyEG9v0QHD_ATYn4WMeUmcAo04LS31VaN_pe15W1tjE3LZ_HfDnaoGCaiIn7JcR0fUahKKXIP_ATRfd6AzxoNtQ.&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/917',
+        name: '한송* 님'
     },
     {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsSgjAMheF36d6miQoSHoYpGC4CUyYt04Xjuyu6cHX-OZvPM_Ez8pnNroupI1cFmzGljQGmddijqNUQZfXzp7pgZ4VWYuqXkEVB16YNXu_g-yS6TV3aVYAcFeDwuw6pwuKKVJaXG57QPrbhcJDYqPSios0YYjo-cmxyzvYP_ERTv947EjbO&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/953',
-        name: '설동*,조미순 님'
-    },
-    {
-        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgjAQBNB_6d1uWxTD8jGk4BYQSJvtkh6M_y7owWSSmczleXT4ylih2nlVbcamRjWJJASYt3HPxJpjps0vxxqiXhh6yhLWWIiBt66Pnh_ggxCneZCdCZxxNRj7bWNdY29Vdb0fqS9WP9N4OtahYgrExN0Us5yfM6hKKfoP_ETVvj87PzbP&S=300x300',
-        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/952',
-        name: '김기* 님'
+        imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcsOgjAQheF36d7OtBKkw8OQgsNFaEqmJV0Y313Rhavz52w-T5aeia6kDtlUm8jVpOacdwJYwnQkFi0xcfDrp4aoV4GeUx63WFhAQtdHL3fwY2bZlyEfwmDR1oDmu2iwMU3lEG3lbhejH_t0OsaSEh5ZWLo5pnx-FkmVUvQf-Imqfb0BOr02zQ..&S=300x300',
+        href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/916',
+        name: '김행* 님'
     }
 ];
         // 캐러셀 초기화
@@ -3786,6 +3824,12 @@ const deliveryPhotos = [
         <div class="image-zoom-hint">배경 클릭하여 닫기</div>
         <button class="image-zoom-select-btn" id="zoomSelectBtn" onclick="selectFromZoom(event)">선택하기</button>
     </div>
+
+    <!-- 전화문의 플로팅 버튼 -->
+    <a href="tel:1588-9913" class="phone-float-btn">
+        <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+        <span>전화문의</span>
+    </a>
 
     <!-- 카톡 문의 플로팅 버튼 -->
     <a href="https://pf.kakao.com/_MGnWn/chat" target="_blank" class="kakao-float-btn">
