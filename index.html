@@ -897,6 +897,40 @@
             fill: #3c1e1e;
         }
 
+        /* 전화문의 버튼 */
+        .btn-phone-order {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            margin-top: 10px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-phone-order:hover {
+            background: #43A047;
+        }
+
+        .btn-phone-order:active {
+            transform: scale(0.98);
+        }
+
+        .btn-phone-order svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+        }
+
         /* 주문 안내 문구 */
         .order-notice {
             text-align: center;
@@ -2337,6 +2371,10 @@
                         카톡 주문하기
                     </button>
                 </div>
+                <a href="tel:1588-9913" class="btn-phone-order">
+                    <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                    전화문의 1588-9913
+                </a>
 
                 <div class="order-notice" style="margin-top: 12px;">
                     <p class="time-info">카톡주문 가능시간 | 평일 09:00~18:00</p>
