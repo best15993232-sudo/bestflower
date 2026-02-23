@@ -444,8 +444,10 @@
                 return;
             }
 
+            const dateForVar = updateTime.replace(/-/g, '/').split(' ')[0];
             const code = `// 배송사진 데이터 (수동 업데이트)
 // 마지막 업데이트: ${updateTime}
+const deliveryUpdateDate = '${dateForVar} 업데이트';
 const deliveryPhotos = [
 ${photos.map(photo => `    {
         imgSrc: '${photo.imgSrc}',
