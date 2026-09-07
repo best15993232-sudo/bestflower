@@ -3603,108 +3603,207 @@
         // 배송사진 캐러셀 (무한 스크롤 애니메이션)
         // =====================================================
 
-// 배송사진 데이터 (수동 업데이트)
-// 마지막 업데이트: 2026-09-07 09:45
+// =====================================================
+// 배송사진 데이터
+// - 아래 목록은 bestflower.co.kr 배송사진 게시판 게시물에서 실제로
+//   추출·복호화한 원본 이미지 주소입니다. (IU 프록시 URL + 원본 URL 병기)
+// - 페이지가 bestflower.co.kr 도메인에서 열리면 아래 로직이 게시판을
+//   직접 읽어 최신 사진으로 자동 교체합니다.
+// - 검증되지 않은 주소는 넣지 않습니다.
+// =====================================================
 const deliveryUpdateDate = '2026/09/07 업데이트';
-const deliveryPhotos = [
+const deliveryBoardUrl = '/board/board_list/code/afterpicture';
+let deliveryPhotos = [
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WkNqwfoxBu6hVA1kgPTT991p76Gkmc5jn0eArY4Oi8ia6jK5FMZeSEGDZp5qJJcdMu1-PNka5MgyUS9jikxh474fo-Q4-FOK0jKUygVGmBeXOVE5Zre3tqpyx7qLlI01fRxsUTIGYuJ9jLud22P_znya69wdjQjVJ&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/09/202609041147509249-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1923',
         name: '신종* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WMKVl_RiDdlGrBLNAPDT991p76Gkmc5jn0eArY4Oi8irajM6imErZEGCOY83EklOm6JejDUkuDD3lEta0EwPHrk-eH-BDId7moVQmMMpYUO5M5ZTVqrmau9E3e9HyuY1fRxsUTIGYuJtSLud22P_znyba9wdiKjVE&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/09/202609061035282176-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1921',
         name: '박태* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzc0OgyAQBOB34V4X0NiwPoxBu_5UCWRZ4qHpu9faQ08zmcN8Hi2-MtaoCu-qy-haVItIQoA1zCUTVxwzBb-dbYzVxjBQlmmPBzFw6Ifo-QF-EuK0jlKYwGrbgnZXaqcb7cy9Nq1u6pupnmn-OsaiYpqIifslZrm20_6f_zTVvT9hoTVB&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/09/202609040917316043-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1919',
         name: '서창* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WqJqyfoxBu6hVAlkgPTT991p76Gkmc5jn0OAr4xVF5V30GW2HYiklIcAa5pqJJcdMwW1Hm6LcGEbKxe_xSQwchjE6voPzhTitU6lMYJTpQNkzlVVat61pjNbN7aLlI81fRxsUTJ6YeFhiLud22P_znyb69wdgjjU9&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/09/202609011552421148-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1910',
         name: '박형* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUsOgzAMBNC7ZN-YBJQScxgUqPkUUJDjiEXVu5fSRVczmsW8gBZfCUtUmVfVJPQO1SSyI8C8jTkRa46JtrCcrY96YegoybDGgxh4a7sY-AFhEOJ97iUzgS2sg6K-sqhLY7zxlavu3t-Mfu7j1zEWFdNATNxOMcm1nfb__Kep5v0BZpo1WA..&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608311919464799-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1909',
         name: '정미* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjcEOgyAQRP-Fe1nEaun6MQbtolYNZIF4aPrvpfbQZJKZvMM8ixpfEWsUmTfRRby3KOaUAgIs-5QjsWQfabdrWaOXK8NAMbnNH8TAez94yw-wLhGHZUyZCbTSLShztjL6plVzbUpqc6nkM0xfT6VRMDli4n72MZ2suP_nP5vo3h9jwzVL&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608272054554538-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1894',
         name: '이태* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjcEOgyAQRP-Fe13E1sL6MQbtolYNZIF4aPrvpfbQw2Qm7zDPosJXxAZF5k10EU2LYk4pIMCyTzkSV-wj7XYta_TVyjBQTG7zBzHw3g_e8gOsS8RhGVNmAiVVC1KfLXWJubY309T6fqmrZ5i-nlqhYHLExP3sYzpZcf_PfzbRvT9mGjVV&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608260946593187-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1890',
         name: '허태* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjcEOgyAQRP-Fe1mgjcj6MQbtolYNZoH00PTfS-2hh8lM3mGeR4OvhFcUhTfRJXQNijnnAwGWfSqJWHJMtPu1rjHKlWGglMMWn8TAez9Ez3fwIRMfy5gLExhlGlDt2aqtsdrenFXKXbR8HNPXow0KpkBM3M8x5ZNV9__8ZxPd-wNkSDVN&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608260717497009-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1889',
         name: '류재* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzcEOgyAQBNB_4V4WkFJdP8agXdSqwSyQHpr-e6099DSTOczzaPCVsEJReBVtwsahmHLeEWDexpKIJcdEm1-ONkS5MPSUcljjkxh46_ro-Q4-ZOJ9HnJhAqOMA1WfqWpj9bVq1M1V1l60fOzj19EGBVMgJu6mmPK5Hfb__KeJ9v0BY1o1SQ..&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608241539076344-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1886',
         name: '유전* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzc0OgyAQBOB34V4WsPFnfRiDdlGrBLJAPDR991p76Gkmc5jPosFXwgpF4V30CbsaxZJzRIDVzyURSw6JvN3ONgW5MYyUstvDQQzshzFYfoB1mTiuUy5MYJSpQbVXqtZordXdNF2lmpuWzzh_HW1QMDli4mEJKV_baf_Pf5ro3x9gpjU-&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608211104279307-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1883',
         name: '김경* 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFjUEOgyAQRe_CvgygoTgexqAd1CrBDJAumt69rV109X7e4j-PBp8ZGxSVd9Fn7FoUSykHAqxxrplYcsoU_fZZU5Ibw0i5hD09iIHjMCbPN_ChEB_rVCoTGGUsKHdSOe3MtXOqteqi5f2YvxVtUDAFYuJhSbmczqL4X_9aon-9AQa6NOQ.&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/2026081827980460-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1881',
         name: '힐스*건강 님'
     },
     {
         imgSrc: 'https://www.bestflower.co.kr/IU/U=eNpFzUsOgzAMBNC7ZF-cGDUCcxgUqPkUUJDjiEXVu5fSRVczmsW8QEivRCWZLKtpEtWezKS6E8C8jTmxFBITb2E5Wx-LRaDjpMMaDxaQre1ikAeEQVn2udcsDGjRg62utJW7O0Tv6spjeXPFcx-_jkMywgMLSzvFpNd22v_zn2aa9wdi0zVH&S=300x300',
+        origin: 'http://imguser.rosemaker.co.kr/bestflower/rm_board/afterpicture/2026/08/202608151226198623-1.jpg',
         href: 'https://www.bestflower.co.kr/board/board_detail/code/afterpicture/number/1875',
         name: '이의* 님'
     }
 ];
 
-        // 이미지 로드 실패 시 해당 슬라이드 제거 (엑박 방지)
-        function handleDeliveryImgError(img) {
-            const slide = img.closest('.delivery-slide');
-            if (slide) slide.remove();
+        // =====================================================
+        // 배송사진 캐러셀
+        // =====================================================
+
+        // 원본 이미지 주소를 https 로 정규화 (혼합 콘텐츠 차단 방지)
+        function toHttps(url) {
+            return url ? url.replace(/^http:\/\//i, 'https://') : url;
         }
 
         // 캐러셀 초기화
         function initDeliverySlider() {
-            // 업데이트 날짜 표시
             const dateEl = document.getElementById('deliveryUpdateDate');
             if (dateEl && deliveryUpdateDate) {
                 dateEl.textContent = deliveryUpdateDate;
             }
+
+            // 먼저 검증된 데이터로 즉시 렌더링
             renderDeliverySlider();
+
+            // 같은 도메인에서 열렸다면 게시판을 직접 읽어 최신 사진으로 교체
+            fetchDeliveryPhotos();
+        }
+
+        // 게시판에서 실제 배송사진 목록 가져오기 (동일 출처일 때만 동작)
+        async function fetchDeliveryPhotos() {
+            try {
+                const res = await fetch(deliveryBoardUrl, { credentials: 'same-origin' });
+                if (!res.ok) return;
+
+                const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+                const found = [];
+
+                doc.querySelectorAll('a[href*="board_detail"]').forEach(a => {
+                    const img = a.querySelector('img');
+                    if (!img) return;
+
+                    const src = img.getAttribute('src') || img.getAttribute('data-src');
+                    if (!src) return;
+
+                    const href = new URL(a.getAttribute('href'), location.origin).href;
+                    if (found.some(p => p.href === href)) return;
+
+                    // "홍길* 님 앞으로 배송된 상품입니다" → "홍길* 님"
+                    const raw = (a.textContent || img.getAttribute('alt') || '').trim();
+                    const m = raw.match(/^(.+?\s*님)/);
+
+                    found.push({
+                        imgSrc: new URL(src, location.origin).href,
+                        href: href,
+                        name: m ? m[1] : raw.slice(0, 12)
+                    });
+                });
+
+                if (found.length >= 4) {
+                    deliveryPhotos = found.slice(0, 30);
+                    renderDeliverySlider();
+                }
+            } catch (e) {
+                // 다른 도메인/로컬에서 열린 경우 CORS 로 실패 → 검증된 목록 유지
+                console.warn('배송사진 실시간 로드 실패, 저장된 목록 사용:', e.message);
+            }
         }
 
         // 캐러셀 렌더링 (무한 스크롤을 위해 사진 복제)
         function renderDeliverySlider() {
             const slider = document.getElementById('deliverySlider');
+            if (!slider) return;
 
             if (deliveryPhotos.length === 0) {
                 slider.innerHTML = '<div class="delivery-loading">배송사진이 없습니다.</div>';
                 return;
             }
 
-            // 무한 스크롤을 위해 사진을 2번 반복
-            const duplicatedPhotos = [...deliveryPhotos, ...deliveryPhotos];
+            slider.innerHTML = '';
 
-            slider.innerHTML = duplicatedPhotos.map(photo => `
-                <a class="delivery-slide" href="${photo.href}" target="_blank">
-                    <div class="photo">
-                        <img src="${photo.imgSrc}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer" onerror="handleDeliveryImgError(this)">
-                    </div>
-                    <span class="name">${photo.name}</span>
-                </a>
-            `).join('');
+            // 무한 스크롤을 위해 사진을 2번 반복
+            [...deliveryPhotos, ...deliveryPhotos].forEach(photo => {
+                const a = document.createElement('a');
+                a.className = 'delivery-slide';
+                a.href = photo.href;
+                a.target = '_blank';
+                a.rel = 'noopener';
+
+                const box = document.createElement('div');
+                box.className = 'photo';
+
+                const img = document.createElement('img');
+                img.alt = photo.name;
+                img.loading = 'lazy';
+                // referrerpolicy 를 지정하지 않습니다.
+                // IU 이미지 프록시가 referer(bestflower.co.kr)를 검사하므로
+                // no-referrer 를 주면 이미지가 차단됩니다.
+                img.src = photo.imgSrc;
+
+                // 프록시 URL 이 실패하면 원본 서버 주소로 1회 재시도,
+                // 그마저 실패하면 해당 슬라이드를 제거 (깨진 이미지 표시 금지)
+                img.dataset.retry = '0';
+                img.onerror = function () {
+                    if (this.dataset.retry === '0' && photo.origin) {
+                        this.dataset.retry = '1';
+                        this.src = toHttps(photo.origin);
+                    } else {
+                        a.remove();
+                    }
+                };
+
+                box.appendChild(img);
+                a.appendChild(box);
+
+                const span = document.createElement('span');
+                span.className = 'name';
+                span.textContent = photo.name;
+                a.appendChild(span);
+
+                slider.appendChild(a);
+            });
         }
 
         // 페이지 로드 시 캐러셀 초기화
