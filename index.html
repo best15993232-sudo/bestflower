@@ -3612,6 +3612,15 @@
 // - 검증되지 않은 주소는 넣지 않습니다.
 // =====================================================
 const deliveryUpdateDate = '2026/09/07 업데이트';
+// 게시판 소스 후보 (위에서부터 순서대로 시도)
+//  - RSS/JSON 이 있으면 게시판 디자인이 바뀌어도 안 깨지므로 먼저 시도
+//  - 없으면 게시판 HTML 을 직접 읽어 파싱
+const deliverySources = [
+    { url: '/board/board_rss/code/afterpicture', type: 'xml'  },
+    { url: '/rss/afterpicture',                  type: 'xml'  },
+    { url: '/board/board_list/code/afterpicture', type: 'html' }
+];
+// 게시판 '더보기' 링크
 const deliveryBoardUrl = '/board/board_list/code/afterpicture';
 let deliveryPhotos = [
     {
@@ -3689,12 +3698,46 @@ let deliveryPhotos = [
 ];
 
         // =====================================================
-        // 배송사진 캐러셀
+        // 배송사진 캐러셀 (게시판 실시간 연동)
+        //
+        // 동작 방식
+        //  1) 검증된 사진 목록으로 즉시 화면을 그림 (빈 화면 방지)
+        //  2) 같은 도메인(bestflower.co.kr)에서 열렸으면 게시판을 읽어
+        //     최신 사진으로 자동 교체
+        //  3) 다른 도메인/로컬에서 열려 실패하면 1) 목록을 그대로 유지
+        //
+        // ※ 다른 도메인에 올리면 브라우저 보안(CORS)으로 2)가 차단됩니다.
+        //   반드시 bestflower.co.kr 안에 업로드해야 실시간 연동됩니다.
         // =====================================================
 
-        // 원본 이미지 주소를 https 로 정규화 (혼합 콘텐츠 차단 방지)
+        // http 주소를 https 로 정규화 (혼합 콘텐츠 차단 방지)
         function toHttps(url) {
-            return url ? url.replace(/^http:\/\//i, 'https://') : url;
+            return url ? String(url).replace(/^http:\/\//i, 'https://') : url;
+        }
+
+        // 절대 주소로 변환
+        function toAbsolute(url) {
+            try {
+                return toHttps(new URL(url, location.href).href);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // "홍길* 님 앞으로 배송된 상품입니다" → "홍길* 님"
+        function cleanName(raw) {
+            const text = (raw || '').replace(/\s+/g, ' ').trim();
+            const m = text.match(/([가-힣A-Za-z0-9*·\s]{1,20}?\s*님)/);
+            if (m) return m[1].trim();
+            return text.replace(/앞으로.*$/, '').trim().slice(0, 14) || '고객님';
+        }
+
+        // 배송사진 이미지로 보이는지 판별 (아이콘·버튼·로고 제외)
+        function looksLikePhoto(src) {
+            if (!src) return false;
+            if (/^data:/i.test(src)) return false;
+            if (/(icon|btn|button|logo|blank|spacer|banner|arrow|bullet)/i.test(src)) return false;
+            return /(\/IU\/|afterpicture|rm_board|imguser|\.(jpe?g|png|gif|webp)(\?|$))/i.test(src);
         }
 
         // 캐러셀 초기화
@@ -3704,51 +3747,138 @@ let deliveryPhotos = [
                 dateEl.textContent = deliveryUpdateDate;
             }
 
-            // 먼저 검증된 데이터로 즉시 렌더링
-            renderDeliverySlider();
-
-            // 같은 도메인에서 열렸다면 게시판을 직접 읽어 최신 사진으로 교체
-            fetchDeliveryPhotos();
+            renderDeliverySlider();   // 1) 저장된 목록으로 먼저 그림
+            loadDeliveryPhotos();     // 2) 게시판에서 최신 목록 시도
         }
 
-        // 게시판에서 실제 배송사진 목록 가져오기 (동일 출처일 때만 동작)
-        async function fetchDeliveryPhotos() {
-            try {
-                const res = await fetch(deliveryBoardUrl, { credentials: 'same-origin' });
-                if (!res.ok) return;
-
-                const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
-                const found = [];
-
-                doc.querySelectorAll('a[href*="board_detail"]').forEach(a => {
-                    const img = a.querySelector('img');
-                    if (!img) return;
-
-                    const src = img.getAttribute('src') || img.getAttribute('data-src');
-                    if (!src) return;
-
-                    const href = new URL(a.getAttribute('href'), location.origin).href;
-                    if (found.some(p => p.href === href)) return;
-
-                    // "홍길* 님 앞으로 배송된 상품입니다" → "홍길* 님"
-                    const raw = (a.textContent || img.getAttribute('alt') || '').trim();
-                    const m = raw.match(/^(.+?\s*님)/);
-
-                    found.push({
-                        imgSrc: new URL(src, location.origin).href,
-                        href: href,
-                        name: m ? m[1] : raw.slice(0, 12)
+        // 게시판 소스를 순서대로 시도
+        async function loadDeliveryPhotos() {
+            for (const source of deliverySources) {
+                try {
+                    const res = await fetch(source.url, {
+                        credentials: 'same-origin',
+                        headers: { 'X-Requested-With': 'fetch' }
                     });
-                });
+                    if (!res.ok) continue;
 
-                if (found.length >= 4) {
-                    deliveryPhotos = found.slice(0, 30);
-                    renderDeliverySlider();
+                    const text = await res.text();
+                    const found = source.type === 'xml'
+                        ? parseDeliveryFeed(text)
+                        : parseDeliveryHtml(text);
+
+                    if (found.length >= 4) {
+                        deliveryPhotos = found.slice(0, 30);
+                        renderDeliverySlider();
+                        console.info('[배송사진] 실시간 연동 성공:', source.url, found.length + '건');
+                        return;
+                    }
+                } catch (e) {
+                    // 다음 후보로 넘어감
                 }
-            } catch (e) {
-                // 다른 도메인/로컬에서 열린 경우 CORS 로 실패 → 검증된 목록 유지
-                console.warn('배송사진 실시간 로드 실패, 저장된 목록 사용:', e.message);
             }
+            console.info('[배송사진] 실시간 연동 실패 → 저장된 목록 사용 (' + deliveryPhotos.length + '건)');
+        }
+
+        // RSS / XML 피드 파싱
+        function parseDeliveryFeed(text) {
+            const out = [];
+            let doc;
+            try {
+                doc = new DOMParser().parseFromString(text, 'application/xml');
+            } catch (e) {
+                return out;
+            }
+            if (!doc || doc.querySelector('parsererror')) return out;
+
+            doc.querySelectorAll('item, entry').forEach(item => {
+                const link = item.querySelector('link');
+                const href = toAbsolute(
+                    (link && (link.textContent.trim() || link.getAttribute('href'))) || ''
+                );
+                if (!href) return;
+
+                const body = (item.querySelector('description, content, summary') || {}).textContent || '';
+                const enclosure = item.querySelector('enclosure');
+                let src = enclosure && enclosure.getAttribute('url');
+
+                if (!src) {
+                    const inner = new DOMParser().parseFromString(body, 'text/html');
+                    const img = Array.from(inner.querySelectorAll('img'))
+                        .map(el => el.getAttribute('src'))
+                        .find(looksLikePhoto);
+                    src = img;
+                }
+                if (!looksLikePhoto(src)) return;
+
+                const title = (item.querySelector('title') || {}).textContent || '';
+                out.push({
+                    imgSrc: toAbsolute(src),
+                    href: href,
+                    name: cleanName(title)
+                });
+            });
+            return out;
+        }
+
+        // 게시판 HTML 파싱
+        // 특정 클래스명에 의존하지 않고 "board_detail 링크 + 그 주변 이미지"를
+        // 기준으로 찾기 때문에 게시판 마크업이 조금 달라도 동작합니다.
+        function parseDeliveryHtml(text) {
+            const out = [];
+            const seen = new Set();
+
+            let doc;
+            try {
+                doc = new DOMParser().parseFromString(text, 'text/html');
+            } catch (e) {
+                return out;
+            }
+
+            const anchors = doc.querySelectorAll('a[href*="board_detail"]');
+
+            anchors.forEach(a => {
+                const href = toAbsolute(a.getAttribute('href'));
+                if (!href || seen.has(href)) return;
+
+                // 이미지 탐색: 링크 안 → 같은 목록 항목(li/td/div) 안
+                let img = Array.from(a.querySelectorAll('img'))
+                    .find(el => looksLikePhoto(el.getAttribute('src') || el.getAttribute('data-src')));
+
+                let container = a;
+                if (!img) {
+                    container = a.closest('li, td, tr, .item, .list_item, div') || a.parentElement;
+                    if (container) {
+                        img = Array.from(container.querySelectorAll('img'))
+                            .find(el => looksLikePhoto(el.getAttribute('src') || el.getAttribute('data-src')));
+                    }
+                }
+
+                // 배경이미지 방식(style="background-image:url(...)")도 확인
+                let src = img && (img.getAttribute('src') || img.getAttribute('data-src'));
+                if (!src && container) {
+                    const bgEl = Array.from(container.querySelectorAll('[style*="background"]'))
+                        .find(el => /url\((['"]?)(.+?)\1\)/i.test(el.getAttribute('style') || ''));
+                    if (bgEl) {
+                        const m = (bgEl.getAttribute('style') || '').match(/url\((['"]?)(.+?)\1\)/i);
+                        if (m && looksLikePhoto(m[2])) src = m[2];
+                    }
+                }
+                if (!looksLikePhoto(src)) return;
+
+                // 이름: 링크 텍스트 → 이미지 alt → 같은 항목의 텍스트
+                const rawName = (a.textContent || '').trim()
+                    || (img && img.getAttribute('alt'))
+                    || (container ? container.textContent : '');
+
+                seen.add(href);
+                out.push({
+                    imgSrc: toAbsolute(src),
+                    href: href,
+                    name: cleanName(rawName)
+                });
+            });
+
+            return out;
         }
 
         // 캐러셀 렌더링 (무한 스크롤을 위해 사진 복제)
@@ -3756,14 +3886,13 @@ let deliveryPhotos = [
             const slider = document.getElementById('deliverySlider');
             if (!slider) return;
 
-            if (deliveryPhotos.length === 0) {
+            if (!deliveryPhotos || deliveryPhotos.length === 0) {
                 slider.innerHTML = '<div class="delivery-loading">배송사진이 없습니다.</div>';
                 return;
             }
 
             slider.innerHTML = '';
 
-            // 무한 스크롤을 위해 사진을 2번 반복
             [...deliveryPhotos, ...deliveryPhotos].forEach(photo => {
                 const a = document.createElement('a');
                 a.className = 'delivery-slide';
@@ -3777,13 +3906,14 @@ let deliveryPhotos = [
                 const img = document.createElement('img');
                 img.alt = photo.name;
                 img.loading = 'lazy';
+
                 // referrerpolicy 를 지정하지 않습니다.
                 // IU 이미지 프록시가 referer(bestflower.co.kr)를 검사하므로
-                // no-referrer 를 주면 이미지가 차단됩니다.
-                img.src = photo.imgSrc;
+                // no-referrer 를 주면 정상 이미지까지 차단됩니다.
+                img.src = toHttps(photo.imgSrc);
 
-                // 프록시 URL 이 실패하면 원본 서버 주소로 1회 재시도,
-                // 그마저 실패하면 해당 슬라이드를 제거 (깨진 이미지 표시 금지)
+                // 프록시 실패 시 원본 서버 주소로 1회 재시도,
+                // 그마저 실패하면 슬라이드를 제거 (깨진 이미지 노출 금지)
                 img.dataset.retry = '0';
                 img.onerror = function () {
                     if (this.dataset.retry === '0' && photo.origin) {
